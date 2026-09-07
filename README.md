@@ -221,18 +221,6 @@ EP
     └── TASK
 ```
 
-Não trate tudo como uma única hierarquia:
-
-```text
-RF → RN → CA → EP → US → TASK    ← evite
-```
-
-Pense em:
-
-```text
-REQUISITOS  ←──── relacionados ────→  TRABALHO
-```
-
 ---
 
 # 4. Mapa dos documentos
