@@ -1,0 +1,102 @@
+# EP-01 — Captura da janela ativa
+
+**Projeto:** Time Tracker Open Source
+**Versão:** 1.0.0 (MVP)
+**Status:** Rascunho
+**Data:** Setembro de 2026
+
+## 1. Objetivo
+
+Implementar a captura das informações da janela ativa em estações Windows 10/11 x64, conforme definido pelo **CA-01**.
+
+**Requisitos relacionados:** RF-01, RNF-01
+**Critério de aceite relacionado:** CA-01
+
+---
+
+US - **U**ser **S**tory (História de Usuário).
+
+## 2. US-01 — Capturar janela ativa
+
+**Como** Colaborador com o agente em execução,
+**quero** que as informações da janela ativa sejam capturadas automaticamente,
+**para que** o sistema registre a atividade realizada na estação.
+
+### Requisitos
+
+O agente deve registrar:
+
+* nome do executável;
+* título da janela;
+* screenshot da tela;
+* usuário Windows;
+* hostname.
+
+A captura deve ocorrer conforme o intervalo configurado e ser executada em **Windows 10/11 x64**.
+
+---
+
+## 3. CA-01 — Captura da janela ativa
+
+**Requisitos relacionados:** RF-01, RNF-01
+
+**Dado que** o agente está em execução em Windows 10/11 x64,
+**quando** chega o intervalo de captura,
+**então** o agente registra:
+
+* nome do executável;
+* título da janela;
+* screenshot da tela;
+* usuário Windows;
+* hostname.
+
+### Verificação
+
+* [ ] Critério verificado e atendido.
+
+---
+
+## 4. Tarefas
+
+| ID      | Tarefa                                    | Resultado esperado                        |
+| ------- | ----------------------------------------- | ----------------------------------------- |
+| TASK-01 | Capturar nome do executável               | Executável da janela ativa identificado   |
+| TASK-02 | Capturar título da janela                 | Título da janela ativa identificado       |
+| TASK-03 | Capturar screenshot                       | Screenshot da tela obtido                 |
+| TASK-04 | Identificar usuário Windows               | Usuário da sessão identificado            |
+| TASK-05 | Identificar hostname                      | Estação identificada                      |
+| TASK-06 | Executar captura no intervalo configurado | Captura disparada no momento previsto     |
+| TASK-07 | Montar registro da captura                | Informações reunidas em um único registro |
+| TASK-08 | Validar CA-01                             | Comportamento do CA-01 verificado         |
+
+---
+
+## 5. Rastreabilidade
+
+```text
+RF-01 / RNF-01
+       │
+       ▼
+EP-01 — Captura da janela ativa
+       │
+       ▼
+US-01 — Capturar janela ativa
+       │
+       ▼
+CA-01 — Captura da janela ativa
+       │
+       ├── TASK-01 — Capturar executável
+       ├── TASK-02 — Capturar título
+       ├── TASK-03 — Capturar screenshot
+       ├── TASK-04 — Identificar usuário
+       ├── TASK-05 — Identificar hostname
+       ├── TASK-06 — Executar captura no intervalo
+       ├── TASK-07 — Montar registro
+       └── TASK-08 — Validar CA-01
+```
+
+## 6. Critério de conclusão
+
+O **EP-01** será considerado concluído quando o **CA-01 — Captura da janela ativa** estiver verificado e atendido.
+
+**Última revisão:** 2026-09-06
