@@ -1,0 +1,44 @@
+
+**Projeto:** Time Tracker Open Source  
+**Versão:** 1.0.0 (MVP)  
+**Status:** Aberto  
+**Data:** Setembro de 2026
+
+---
+
+## 1. Objetivo
+
+Implementar :
+- Dashbord onde possa configurar intervalo de captura de metadados.
+- detectar inatividade de um colaborador, se tiver uma falta de atividade mouse e teclado em determinado intervalo de tempo
+- dashboard mostra o usuario/colobarador como inativo/ativo na interface
+
+
+**Requisitos relacionados:** RF-03, RN-02.
+
+**Critério de aceite:** CA-02
+
+---
+
+## 3. Tarefas
+
+| ID | Tarefa | Resultado esperado |
+| --- | --- | --- |
+| TASK-01 []| Criar campos no Dashboard para configurar o intervalo de captura e o tempo limite de inatividade. | Interface de configuração disponível para o gestor. |
+| TASK-02 []| Implementar endpoints na API para salvar e fornecer as configurações de tempos (captura e inatividade). | Backend recebendo e persistindo as configurações. |
+| TASK-03 []| Implementar no agente a detecção do tempo de ociosidade do mouse e teclado (via hooks do SO). | Agente capaz de contar o tempo exato sem interações do usuário. |
+| TASK-04 []| Adicionar lógica no agente para comparar a ociosidade com o limite configurado (padrão de 5 min) e marcar o status. | Período classificado internamente como Ativo ou Inativo. |
+| TASK-05 []| Incluir o status de inatividade no envio do registro (payload) para o servidor. | Backend recebendo a informação de inatividade do colaborador. |
+| TASK-06 []| Atualizar a interface do Dashboard para exibir visualmente se o colaborador está Ativo ou Inativo. | Status do colaborador refletido em tempo real na UI. |
+| TASK-07 []| Testar CA-02. | Comportamento de inatividade e reflexo no dashboard verificados. |
+
+---
+
+## 4. Antes de entregar
+
+- [ ] TASKs implementadas.
+- [ ] CA-02 testado.
+- [ ] Requisitos relacionados respeitados.
+- [ ] Evidência disponível.
+
+

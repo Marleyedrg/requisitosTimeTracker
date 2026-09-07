@@ -1,36 +1,31 @@
 # Time Tracker — Documento de Requisitos
 
 **Responsáveis:** Marley Eduardo Rocha Guedes, Patricia Pereira Martins – Time de Requisitos e Testes
+
 **Data:** Setembro de 2026
+
 **Versão:** 1.0.0
+
 **Status:** Rascunho
+
 **Audiência:** Equipe de desenvolvimento e gestores do sistema
 
 ## Sumário
 
 1. [Introdução](#1-introdução)
-
 2. [Visão do Produto](#2-visão-do-produto)
-
 3. [Escopo](#3-escopo)
-
 4. [Personas](#4-personas)
-
 5. [Fluxos Principais](#5-fluxos-principais)
-
 6. [Regras de Negócio](#6-regras-de-negócio)
-
 7. [Requisitos Funcionais](#7-requisitos-funcionais)
-
 8. [Requisitos Não Funcionais](#8-requisitos-não-funcionais)
-
 9. [Regras de Interface](#9-regras-de-interface)
-
 10. [Requisitos Condicionantes](#10-requisitos-condicionantes)
-
 11. [Considerações de Arquitetura](#11-considerações-de-arquitetura)
-
 12. [Critérios de Aceite](#12-critérios-de-aceite)
+
+---
 
 ## 1. Introdução
 
@@ -42,15 +37,13 @@ Este documento especifica o projeto Time Tracker: agente desktop, backend/API e 
 
 O Time Tracker é uma solução open source corporativa para monitoramento automatizado de atividades em estações de trabalho.
 
-O agente coleta, ****de forma não intrusiva****:
+O agente coleta, **de forma não intrusiva**:
 
-- o nome do processo
+- o nome do processo;
+- título da janela ativa;
+- screenshot da janela ativa.
 
-- título da janela ativa
-
-- screenshot da janela ativa
-
-**ideia fazer um OCR, para identificar se tem alguma informação sensível do usuário antes de enviar**
+**Ideia:** fazer um OCR para identificar se há alguma informação sensível do usuário antes de enviar.
 
 #### SQLite
 
@@ -58,9 +51,8 @@ O agente coleta, ****de forma não intrusiva****:
 
 #### Backend
 
-- Organiza os dados
-
-- Realiza análises estatísticas
+- Organiza os dados.
+- Realiza análises estatísticas.
 
 #### Dashboard
 
@@ -77,9 +69,7 @@ O agente coleta, ****de forma não intrusiva****:
 ### 2.3 Proposta de Valor
 
 - **Para o gestor:** visualizar atividade em tempo real, configurar o agente, acompanhar métricas e exportar relatórios.
-
 - **Para o colaborador:** ter o período de atividade monitorado sem captura de teclas, microfone ou câmera e com ícone visível na System Tray.
-
 - **Para a equipe de desenvolvimento:** contar com uma solução open source, documentada e inicializável por Docker Compose.
 
 ## 3. Escopo
@@ -110,15 +100,12 @@ O agente coleta, ****de forma não intrusiva****:
 **Objetivos:**
 
 - Acompanhar quais colaboradores estão online e qual aplicação ou janela está em uso.
-
 - Consultar métricas e relatórios de produtividade.
-
 - Configurar intervalo de captura, tempo de inatividade e palavras-chave.
 
 **Necessidades:**
 
 - Acesso ao dashboard e aos endpoints correspondentes.
-
 - Visualização de dados agregados e por colaborador.
 
 ### 4.2 Colaborador
@@ -141,14 +128,14 @@ O agente coleta, ****de forma não intrusiva****:
 
 | Etapa | Quem executa | Ação ou resposta esperada |
 | --- | --- | --- |
-| 1 | Agente | Lê via Win32 API o nome do processo e o título da janela em primeiro plano, e faz uma screenshot.|
+| 1 | Agente | Lê via Win32 API o nome do processo e o título da janela em primeiro plano, e faz uma screenshot. |
 | 2 | Agente | Obtém usuário Windows, hostname e estado de atividade/inatividade. |
 | 3 | Agente | Envia o registro ao servidor. |
 | 4 | Backend | Recebe, classifica por palavras-chave e disponibiliza o dado ao dashboard. |
 
 **Resultado final:** registro disponível para consultas analíticas.
 
-![fluxo de funcionamento do programa](epicos/fluxo_coleta_dados.png)
+![Fluxo de funcionamento do programa](epicos/fluxo_coleta_dados.png)
 
 **Alternativas e falhas:** se a rede falhar, armazenar o registro em SQLite local e sincronizá-lo quando a conexão for restabelecida. O comportamento de confirmação, retry e duplicidade não foi definido.
 
@@ -291,55 +278,40 @@ Escalabilidade, disponibilidade, acessibilidade, retenção e descarte de dados,
 ### 9.1 Dashboard web
 
 - **Acesso:** gestor, conforme perfil citado no PDF; autenticação e autorização não especificadas.
-
 - **Elementos:** seletor de data, indicador de status da API, cards de horas monitoradas, colaboradores ativos e software mais usado, gráfico de rosca, tabela em tempo real, timeline e exportação CSV/PDF.
-
 - **Validação:** não definida.
-
 - **Carregamento:** não definido.
-
 - **Sucesso:** apresentar dados retornados pela API.
-
 - **Erro:** não definido.
-
 - **Estado vazio:** não definido.
-
 - **Restrições de interação:** ações de configuração e exportação são associadas ao gestor, mas a matriz detalhada não foi definida.
-
 - **Referências:** RF-10 a RF-16.
 
 ### 9.2 Agente na System Tray
 
 - **Acesso:** colaborador da estação Windows.
-
 - **Elementos:** ícone visível e menu de contexto com status Online ou Offline.
-
-- **Validação, carregamento, sucesso, erro e estado vazio:** Não se aplica ou não determinado pelo PDF.
-
+- **Validação, carregamento, sucesso, erro e estado vazio:** não se aplica ou não determinado pelo PDF.
 - **Referências:** RF-06, RN-01.
 
 ### 9.3 Experiência geral
 
 - **Navegação:** dashboard como SPA React; rotas não especificadas.
-
 - **Mensagens:** não definidas.
-
 - **Adaptação de tela:** a interface é web, mas breakpoints e comportamentos responsivos não são especificados no PDF.
-
 - **Acessibilidade:** não definida.
-
 - **Confirmações:** não definidas.
 
 ## 10. Requisitos Condicionantes
 
-| ID    | Condicionante                                                  | Impacto                                                         |
-| ----- | -------------------------------------------------------------- | --------------------------------------------------------------- |
-| RC-01 | Agente em C#/.NET 8 com integração Win32 e SQLite.             | Restringe a plataforma e as tecnologias utilizadas pelo agente. |
+| ID | Condicionante | Impacto |
+| --- | --- | --- |
+| RC-01 | Agente em C#/.NET 8 com integração Win32 e SQLite. | Restringe a plataforma e as tecnologias utilizadas pelo agente. |
 | RC-02 | Backend em Python/FastAPI com PostgreSQL e Swagger em `/docs`. | Condiciona a implementação da API, persistência e documentação. |
-| RC-03 | Dashboard em React/Vite/Tailwind CSS com Recharts.             | Condiciona a implementação da interface e dos gráficos.         |
-| RC-04 | Infraestrutura inicializável por Docker Compose.               | Condiciona a forma de implantação inicial.                      |
-| RC-05 | Agente compatível com Windows 10/11 x64.                       | Exclui outras plataformas do escopo do MVP.                     |
-| RC-06 | Comunicação exclusivamente via HTTPS.                          | Exige comunicação segura entre agente, API e dashboard.         |
+| RC-03 | Dashboard em React/Vite/Tailwind CSS com Recharts. | Condiciona a implementação da interface e dos gráficos. |
+| RC-04 | Infraestrutura inicializável por Docker Compose. | Condiciona a forma de implantação inicial. |
+| RC-05 | Agente compatível com Windows 10/11 x64. | Exclui outras plataformas do escopo do MVP. |
+| RC-06 | Comunicação exclusivamente via HTTPS. | Exige comunicação segura entre agente, API e dashboard. |
 
 ## 11. Considerações de Arquitetura
 
@@ -348,9 +320,7 @@ Escalabilidade, disponibilidade, acessibilidade, retenção e descarte de dados,
 Durante a operação normal, cada leitura coletada pelo agente será enviada diretamente à API, sem acúmulo local.
 
 ```text
-
 Agente → HTTPS → API → PostgreSQL
-
 ```
 
 O SQLite não participa do fluxo normal de persistência.
@@ -360,131 +330,250 @@ O SQLite não participa do fluxo normal de persistência.
 Caso a comunicação com a API falhe, as leituras serão armazenadas localmente em SQLite.
 
 ```text
-
 Agente → tentativa de envio → falha
-
                            ↓
-
                         SQLite
-
 ```
 
 Quando a conexão for restabelecida, os registros pendentes deverão ser sincronizados com o backend.
 
 ```text
-
 SQLite → API → PostgreSQL
-
 ```
 
 ### Responsabilidades dos componentes
 
-| Componente    | Responsabilidade                                                                                                            |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Agente        | Coletar informações da máquina e da janela ativa, detectar inatividade, enviar leituras e controlar a contingência offline. |
-| SQLite        | Armazenar temporariamente leituras que não puderam ser enviadas ao servidor.                                                |
-| API / Backend | Receber, validar, processar e persistir os dados enviados pelos agentes.                                                    |
-| PostgreSQL    | Manter os dados centralizados e persistentes do sistema.                                                                    |
-| Dashboard     | Consultar a API e apresentar métricas, gráficos e informações ao gestor.                                                    |
+| Componente | Responsabilidade |
+| --- | --- |
+| Agente | Coletar informações da máquina e da janela ativa, detectar inatividade, enviar leituras e controlar a contingência offline. |
+| SQLite | Armazenar temporariamente leituras que não puderam ser enviadas ao servidor. |
+| API / Backend | Receber, validar, processar e persistir os dados enviados pelos agentes. |
+| PostgreSQL | Manter os dados centralizados e persistentes do sistema. |
+| Dashboard | Consultar a API e apresentar métricas, gráficos e informações ao gestor. |
 
 ### Pontos em aberto
 
 Ainda precisam ser definidos:
 
-* autenticação e autorização;
-
-* contrato de comunicação entre agente e API;
-
-* formato exato dos dados enviados;
-
-* política de retry;
-
-* idempotência e tratamento de duplicidades;
-
-* ordenação dos registros durante a sincronização offline;
-
-* política de retenção dos dados;
-
-* navegadores suportados;
-
-* breakpoints da interface;
-
-* método de medição de desempenho.
+- autenticação e autorização;
+- contrato de comunicação entre agente e API;
+- formato exato dos dados enviados;
+- política de retry;
+- idempotência e tratamento de duplicidades;
+- ordenação dos registros durante a sincronização offline;
+- política de retenção dos dados;
+- navegadores suportados;
+- breakpoints da interface;
+- método de medição de desempenho.
 
 ## 12. Critérios de Aceite
 
-### CA-01 — Captura da janela ativa
+Os Critérios de Aceite (`CA`) definem **como verificar se o comportamento esperado foi implementado corretamente**.
 
-**Requisitos relacionados:** RF-01, RNF-01.
+Cada CA está relacionado aos requisitos que justificam sua existência.
 
-- **Dado que:** o agente está em execução em Windows 10/11 x64.
+> Marque um CA como atendido somente após verificar o comportamento e registrar uma evidência.
 
-- **Quando:** chega o intervalo de captura.
+---
 
-- **Então:** o agente registra o nome do executável, título da janela, screenshot da tela, usuário Windows e hostname.
+### CA-01 — Captura da atividade
+
+**Requisitos relacionados:** RF-01, RN-01, RNF-01.
+
+- **Dado que:** o agente está em execução em uma máquina Windows 10/11 x64.
+- **Quando:** o agente estiver ativo e mandar uma requisição para fazer captura dos metadados
+- **Então:** o agente registra:
+  - nome do executável
+  - título da janela ativa
+  - screenshot
+  - usuário Windows
+  - hostname.
 
 - [ ] Critério verificado e atendido.
 
 **Evidência:**
 
-### CA-02 — Inatividade
+---
+
+### CA-02 — Detecção de inatividade
 
 **Requisitos relacionados:** RF-03, RN-02.
 
-- **Dado que:** o tempo sem interação de mouse e teclado ultrapassa o limite configurado.
-
-- **Quando:** o agente verifica a atividade.
-
-- **Então:** o período é marcado como inativo.
+- **Dado que:** existe um limite de inatividade configurado.
+- **Quando:** o período sem interação de mouse ou teclado ultrapassa esse limite.
+- **Então:** o agente marca o período como inativo no dashboard do gestor.
 
 - [ ] Critério verificado e atendido.
 
 **Evidência:**
+
+---
 
 ### CA-03 — Falha de rede e sincronização
 
-**Requisitos relacionados:**  RF-04, RN-05.
+**Requisitos relacionados:** RF-04, RN-04.
 
-- **Dado que:** o agente captura um registro e não consegue comunicar-se com o servidor.
-
-- **Quando:** a conexão falha e depois é restabelecida.
-
-- **Então:** o registro fica no SQLite durante a falha, é sincronizado depois e removido do buffer, conforme a decisão sobre RF-04.
+- **Dado que:** o agente possui um registro que precisa ser enviado.
+- **Quando:** a comunicação com o servidor falha.
+- **Então:** o registro é armazenado temporariamente no SQLite.
+- **E Quando:** a conexão com o servidor for restabelecida.
+- **Então:** os registros pendentes são enviados ao backend
+- **E:** após a sincronização bem-sucedida, os registros são removidos do armazenamento temporário.
 
 - [ ] Critério verificado e atendido.
 
 **Evidência:**
+
+---
 
 ### CA-04 — Dashboard analítico
 
-**Requisitos relacionados:** RF-10, RF-11, RF-14 a 16.
+**Requisitos relacionados:** RF-10, RF-11, RF-14, RF-15, RF-16.
 
-- **Dado que:** existem registros classificados.
-
-- **Quando:** o gestor consulta o dashboard.
-
-- **Então:** são exibidos colaboradores ativos, aplicativo/janela, categorias, horas e opções de exportação CSV/PDF.
-
-- [ ] Critério verificado e atendido.
-
-**Evidência:**
-
-### CA-05 — Privacidade
-
-**Requisitos relacionados:** RN-01, RNF-03 a 05.
-
-- **Dado que:** o agente está instalado em um ambiente de testes com tarefas definidas e há, na tela, conteúdos potencialmente sensíveis, como conversas e senhas.
-
-- **Quando:** o agente coleta e transmite atividades.
-
-- **Então:** não expõe dados sensíveis e mantém o ícone visível na System Tray.
+- **Dado que:** existem registros de atividades disponíveis no backend.
+- **Quando:** o gestor acessa o dashboard.
+- **Então:** o sistema permite visualizar:
+  - colaboradores ativos
+  - aplicativo ou janela em uso
+  - distribuição de tempo por categoria
+  - total de horas
+  - dados filtrados por data ou colaborador
+  - exportação em CSV
+  - exportação em PDF.
 
 - [ ] Critério verificado e atendido.
 
 **Evidência:**
 
-**---**
+---
+
+### CA-05 — Privacidade e segurança da coleta
+
+**Requisitos relacionados:** RN-01, RNF-03, RNF-04, RNF-05.
+
+- **Dado que:** o agente está em execução em uma máquina corporativa.
+- **Quando:** atividades são coletadas e transmitidas.
+- **Então:** o sistema garante que:
+  - teclas digitadas não são capturadas
+  - microfone não é acessado
+  - câmera não é acessada
+  - a coleta permanece limitada aos dados definidos na RN-01
+  - a comunicação com o servidor ocorre via HTTPS
+  - o ícone do agente permanece visível na System Tray.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-06 — Envio normal dos registros
+
+**Requisitos relacionados:** RF-02.
+
+- **Dado que:** o agente está conectado ao servidor.
+- **Quando:** uma nova leitura é coletada.
+- **Então:** o registro é enviado diretamente ao servidor, sem ser acumulado no SQLite durante a operação normal.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-07 — Configuração remota do agente
+
+**Requisitos relacionados:** RF-05, RF-12.
+
+- **Dado que:** existem configurações disponíveis no servidor.
+- **Quando:** o agente consulta as configurações.
+- **Então:** o agente obtém e aplica o intervalo de captura e o tempo limite de inatividade.
+- **E Quando:** o gestor altera uma dessas configurações através do sistema.
+- **Então:** a API persiste a alteração
+- **E:** a configuração atualizada fica disponível para o agente
+- **E:** o agente passa a utilizar o novo valor sem necessidade de recompilação.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-08 — Status de conexão do agente
+
+**Requisitos relacionados:** RF-06.
+
+- **Dado que:** o agente está em execução.
+- **Quando:** existe comunicação com o servidor.
+- **Então:** a System Tray indica o status Online.
+- **E Quando:** a comunicação com o servidor não estiver disponível.
+- **Então:** a System Tray indica o status Offline.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-09 — Categorização das atividades
+
+**Requisitos relacionados:** RN-03, RF-08, RF-09.
+
+- **Dado que:** existem palavras-chave de categorização configuradas.
+- **Quando:** o backend recebe um registro de atividade.
+- **Então:** o registro é classificado em uma das categorias: Desenvolvimento, Design, Comunicação, Social ou Outros.
+- **E Quando:** o gestor cria ou edita uma palavra-chave.
+- **Então:** a nova regra fica disponível para a categorização dos registros.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-10 — Documentação da API
+
+**Requisitos relacionados:** RF-13, RNF-07.
+
+- **Dado que:** a API está em execução.
+- **Quando:** o endpoint `/docs` é acessado.
+- **Então:** a documentação OpenAPI/Swagger da API é apresentada.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-11 — Desempenho do agente
+
+**Requisitos relacionados:** RNF-02.
+
+- **Dado que:** o agente está executando em condições definidas para o teste de desempenho.
+- **Quando:** o consumo de recursos é medido.
+- **Então:** o agente utiliza menos de 50 MB de RAM e menos de 1% de CPU.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+---
+
+### CA-12 — Inicialização da infraestrutura
+
+**Requisitos relacionados:** RNF-06, RC-04.
+
+- **Dado que:** o ambiente possui Docker e Docker Compose disponíveis.
+- **Quando:** o comando `docker compose up` é executado.
+- **Então:** a infraestrutura necessária para o sistema é inicializada.
+
+- [ ] Critério verificado e atendido.
+
+**Evidência:**
+
+
+
 
 **Última revisão:** 2026-09-06.
 
-**Próxima revisão:** a definir
+**Próxima revisão:** a definir.

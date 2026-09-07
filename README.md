@@ -1,564 +1,348 @@
-# Documentação de Requisitos — Time Tracker
+# Documentação de Requisitos — TimeTracker
 
-Este repositório concentra a documentação funcional e de requisitos do **Time Tracker**.
+Este repositório organiza os **requisitos, o trabalho de desenvolvimento e a análise das entregas** do TimeTracker.
 
-Seu objetivo é manter uma fonte clara e rastreável sobre:
+![workFlowAnalista_dev](/epicos/workFlowAnalista_dev.png)
 
-* o que o sistema deve fazer;
-* como a implementação deve ser organizada;
-* como validar cada comportamento;
-* como identificar diferenças entre requisito e código.
+
+> **Analista:** define e mantém os requisitos e organiza o trabalho nos EPs.  
+
+> **Desenvolvedor:** usa o EP como ponto de entrada para implementar o que foi definido.
 
 ---
 
 # Sumário
 
-## Para Desenvolvedores
+## Desenvolvedor — comece aqui
 
-1. [O que você precisa saber](#desenvolvedor)
-2. [Documentos principais](#documentos-do-desenvolvedor)
-3. [Como os requisitos chegam até o código](#fluxo-do-desenvolvedor)
-4. [Como ler um épico](#como-ler-um-épico)
-5. [Antes de implementar](#antes-de-implementar)
-6. [Quando considerar uma implementação pronta](#quando-considerar-uma-implementação-pronta)
+**→ [Como desenvolver um EP](#1-desenvolvedor)**
 
-## Para Analistas de Requisitos
+O seu ponto de entrada é sempre o **EP**.
 
-1. [O que você precisa saber](#analista-de-requisitos)
-2. [Documentos principais](#documentos-do-analista)
-3. [Documento principal de análise](#relatório-rq-gap)
-4. [Como realizar uma análise](#fluxo-do-analista)
-5. [Quando criar um GAP](#quando-criar-um-gap)
-6. [Quando um requisito muda](#quando-um-requisito-muda)
+## Analista de Requisitos — comece aqui
 
-## Referência rápida
+**→ [Como definir e analisar requisitos](#2-analista-de-requisitos)**
 
-1. [Mapa dos documentos](#mapa-dos-documentos)
-2. [Identificadores](#identificadores)
-3. [Informações ainda não definidas](#informações-a-definir)
+O Analista mantém os requisitos, cria EPs e CAs e verifica as entregas.
+
+## Referência
+
+3. [Requisitos e trabalho](#3-requisitos-e-trabalho)
+4. [Mapa dos documentos](#4-mapa-dos-documentos)
+5. [Identificadores](#5-identificadores)
 
 ---
 
-# Desenvolvedor
+# 1. Desenvolvedor
 
-O **Desenvolvedor** transforma requisitos em software.
+> **Objetivo:** implementar o comportamento definido no EP.
 
-Sua principal pergunta deve ser:
-
-> **O que preciso implementar para atender ao critério de aceite?**
-
-<a id="documentos-do-desenvolvedor"></a>
-
-## Documentos do Desenvolvedor
-
-### `epicos/`
-
-É o principal ponto de entrada para implementação.
-
-Um épico organiza o trabalho:
+O Desenvolvedor começa em:
 
 ```text
-EP-01
+epicos/
+```
+
+O EP deve informar:
+
+- o que será implementado;
+- qual CA precisa ser atendido;
+- quais TASKs precisam ser realizadas;
+- quais documentos precisam ser consultados;
+- como o comportamento será validado.
+
+Exemplo:
+
+```text
+EP-02 — Detecção de inatividade
 │
-└── US-01
-    │
-    └── CA-01
-        │
-        ├── TASK-01
-        ├── TASK-02
-        └── TASK-03
-```
-
-### `visao.md`
-
-Contém os requisitos que justificam a implementação:
-
-* `RN` — Regra de Negócio;
-* `RF` — Requisito Funcional;
-* `RNF` — Requisito Não Funcional;
-* `CA` — Critério de Aceite.
-
-### `rbac.md`
-
-Consultar quando a funcionalidade envolver:
-
-* perfis;
-* permissões;
-* acesso a dados;
-* autorização.
-
-### `sitemap.md`
-
-Consultar quando houver interface ou navegação.
-
-### `responsividade.md`
-
-Consultar quando houver comportamento responsivo.
-
-### `relatorio-rq-gap.md`
-
-Consultar quando o Analista identificar:
-
-* comportamento ausente;
-* implementação parcial;
-* divergência;
-* pendência;
-* necessidade de correção.
-
----
-
-<a id="fluxo-do-desenvolvedor"></a>
-
-## Fluxo do Desenvolvedor
-
-```text
-visao.md
-   ↓
-RF / RNF / RN
-   ↓
-CA
-   ↓
-EP / US
-   ↓
-TASK
-   ↓
-Código
-   ↓
-Teste / Evidência
-```
-
-O Desenvolvedor não deve decidir sozinho comportamentos que não estejam definidos.
-
----
-
-<a id="como-ler-um-épico"></a>
-
-## Como ler um épico
-
-Ao abrir um épico, procure responder:
-
-1. Qual funcionalidade está sendo entregue?
-2. Qual CA precisa ser atendido?
-3. Quais requisitos estão relacionados?
-4. Quais TASKs precisam ser implementadas?
-5. Como o comportamento será testado?
-
-Exemplo:
-
-```text
-EP-01 — Captura da janela ativa
-
-CA-01
-├── RF-01
-├── RNF-01
+├── CA-02
 │
-├── TASK-01 — obter executável
-├── TASK-02 — obter título
-├── TASK-03 — capturar screenshot
-└── TASK-04 — montar registro
+├── Requisitos relacionados
+│   ├── RF-03 → visao.md
+│   └── RN-02 → visao.md
+│
+├── Consultar
+│   └── rbac.md → seção [...]
+│
+└── TASKs
+    ├── TASK-01
+    ├── TASK-02
+    └── TASK-03
+```
+
+Não é necessário procurar requisitos pelo repositório inteiro.
+
+> **Siga as referências indicadas no EP.**
+
+## Fluxo
+
+```text
+Abrir EP
+   ↓
+Consultar referências indicadas
+   ↓
+Implementar TASKs
+   ↓
+Atender ao CA
+   ↓
+Testar
+   ↓
+Informar EP concluído
+```
+
+## Antes de entregar
+
+- [ ] TASKs implementadas.
+- [ ] CA atendido.
+- [ ] Referências indicadas no EP respeitadas.
+- [ ] Comportamento testado.
+- [ ] Evidência disponível.
+
+Quando estiver pronto:
+
+```text
+EP-02 implementado e pronto para análise.
 ```
 
 ---
 
-<a id="antes-de-implementar"></a>
+# 2. Analista de Requisitos
 
-## Antes de implementar
+> **Objetivo:** transformar necessidades em requisitos claros para o Desenvolvimento e verificar se o resultado atende ao especificado.
 
-* [ ] Sei qual EP estou implementando.
-* [ ] Sei qual CA precisa ser atendido.
-* [ ] Conheço os RF, RNF e RN relacionados.
-* [ ] O CA é testável.
-* [ ] As permissões necessárias estão definidas.
-* [ ] Não existe `A definir` bloqueando a implementação.
-* [ ] As TASKs estão relacionadas ao CA.
+O Analista é responsável por:
 
-Se uma decisão necessária estiver indefinida, não invente o comportamento no código.
+- criar e manter `RN`, `RF` e `RNF`;
+- definir os Critérios de Aceite (`CA`);
+- criar e atualizar os Épicos (`EP`);
+- relacionar requisitos e trabalho;
+- indicar no EP quais documentos o Desenvolvedor deve consultar;
+- atualizar a documentação quando necessário;
+- analisar os EPs entregues;
+- registrar evidências e GAPs.
 
----
+## Ao preparar um EP
 
-<a id="quando-considerar-uma-implementação-pronta"></a>
-
-## Quando considerar uma implementação pronta
-
-Uma funcionalidade não está pronta apenas porque o código foi escrito.
-
-Verifique:
-
-* [ ] CA executado.
-* [ ] Evidência coletada.
-* [ ] Permissões seguem o RBAC.
-* [ ] Interface segue os documentos relacionados, quando aplicável.
-
-Exemplos de evidência:
-
-* teste automatizado;
-* execução manual;
-* log;
-* screenshot;
-* resposta da API;
-* registro no banco.
-
----
-
-# Analista de Requisitos
-
-O **Analista de Requisitos** verifica se o que foi especificado está realmente sendo entregue.
-
-Sua principal pergunta deve ser:
-
-> **O sistema está atendendo ao que foi especificado?**
-
-<a id="documentos-do-analista"></a>
-
-## Documentos do Analista
-
-O Analista consulta o conjunto completo da documentação.
-
-### `visao.md`
-
-Fonte principal de:
-
-* problema;
-* escopo;
-* regras de negócio;
-* requisitos funcionais;
-* requisitos não funcionais;
-* critérios de aceite.
-
-### `epicos/`
-
-Mostra como os requisitos foram organizados para implementação.
-
-### `rbac.md`
-
-Define perfis e permissões.
-
-### `sitemap.md`
-
-Define interfaces e navegação.
-
-### `responsividade.md`
-
-Define comportamento responsivo.
-
-### `relatorio-rq-gap.md`
-
-É o **documento principal de análise do Analista de Requisitos**.
-
----
-
-<a id="relatório-rq-gap"></a>
-
-## Relatório RQ-GAP
-
-Os documentos de requisitos dizem:
+O Analista parte dos requisitos e organiza o trabalho:
 
 ```text
-O que deveria existir
+REQUISITOS                     TRABALHO
+
+RF-03 ───────────────┐         EP-02
+RN-02 ───────────────┼──────→  └── US-03
+CA-02 ───────────────┘             ├── TASK-01
+                                   ├── TASK-02
+                                   └── TASK-03
 ```
 
-O código mostra:
+O EP deve permitir que o Desenvolvedor responda rapidamente:
 
-```text
-O que existe
-```
+1. **O que preciso fazer?**
+2. **Qual CA preciso atender?**
+3. **Onde estão as informações necessárias?**
+4. **Como saber se terminei?**
 
-O relatório RQ-GAP registra:
-
-```text
-O que foi encontrado
-e se está de acordo
-```
-
-Fluxo:
-
-```text
-Requisito
-   ↓
-Implementação
-   ↓
-Evidência
-   ↓
-Status
-   ↓
-GAP, se necessário
-```
-
-### Status utilizados
-
-* **Atendido**
-* **Parcial**
-* **Ausente**
-* **Divergente**
-* **Não verificável**
+Se uma informação estiver em outro documento, **referencie-a no EP**.
 
 Exemplo:
 
 ```text
-RF-01 → Atendido → teste + evidência
-
-RF-03 → Parcial → GAP-01
-
-RF-04 → Não verificável → teste pendente
+Consultar:
+- visao.md → RF-03
+- rbac.md → permissões do Colaborador
+- sitemap.md → tela de atividades
 ```
 
-O relatório não substitui o requisito original.
+Assim, o EP funciona como **mapa para a implementação**, sem duplicar toda a documentação.
+
+## Quando um EP for entregue
+
+O Desenvolvimento informa:
 
 ```text
-visao.md
-└── RF-01
+EP-02 implementado.
 ```
 
-continua sendo a definição oficial.
-
-No relatório:
+Então:
 
 ```text
-RF-01
-└── Atendido
-    └── Evidência
+EP entregue
+    ↓
+Consultar CA
+    ↓
+Verificar implementação
+    ↓
+Executar teste
+    ↓
+Coletar evidência
+    ↓
+Definir status
+    ↓
+Registrar GAP, se necessário
 ```
+
+O resultado é registrado em:
+
+```text
+relatorio-rq-gap.md
+```
+
+Use somente:
+
+| Status | Significado |
+| --- | --- |
+| **Atendido** | Funciona conforme especificado |
+| **Parcial** | Apenas parte funciona |
+| **Ausente** | Não foi implementado |
+| **Divergente** | Funciona diferente do especificado |
+| **Não verificável** | Não há evidência suficiente |
+
+> Encontrar código não é suficiente para marcar um CA como **Atendido**. O comportamento precisa ser verificado.
+
+As instruções detalhadas de análise, evidência e GAP ficam no `relatorio-rq-gap.md`.
 
 ---
 
-<a id="fluxo-do-analista"></a>
+# 3. Requisitos e trabalho
 
-## Fluxo do Analista
-
-### 1. Identificar o requisito
-
-Exemplo:
+Requisitos e trabalho são **estruturas diferentes, mas relacionadas**.
 
 ```text
-RF-01
-CA-01
+REQUISITOS                     TRABALHO
+
+RF-03 ───────────────┐         EP-02
+RN-02 ───────────────┼──────→  └── US-03
+CA-07 ───────────────┘             ├── TASK-08
+                                   ├── TASK-09
+                                   └── TASK-10
 ```
 
-### 2. Verificar a implementação
+## Requisitos
 
-Procure:
-
-* código;
-* endpoint;
-* função;
-* banco;
-* interface;
-* teste relacionado.
-
-### 3. Executar ou verificar o comportamento
-
-Sempre que possível, valide o CA.
-
-### 4. Coletar evidência
-
-Exemplo:
+Definem **o que precisa ser atendido**:
 
 ```text
-CA-01
-→ teste executado
-→ registro gerado
-→ screenshot coletado
+RN   → Regra de Negócio
+RF   → Requisito Funcional
+RNF  → Requisito Não Funcional
+CA   → Critério de Aceite
 ```
 
-### 5. Definir o status
+## Trabalho
+
+Organiza **como será implementado**:
 
 ```text
-Atendido
-Parcial
-Ausente
-Divergente
-Não verificável
-```
-
-### 6. Criar GAP quando necessário
-
-Se existir algo que precise ser corrigido, investigado ou decidido.
-
----
-
-<a id="quando-criar-um-gap"></a>
-
-## Quando criar um GAP
-
-Crie um GAP quando houver:
-
-* parte do requisito não implementada;
-* requisito ausente;
-* comportamento diferente do especificado;
-* teste necessário ainda não realizado;
-* evidência insuficiente;
-* dúvida que impede a conclusão;
-* divergência entre documentação e implementação.
-
-Exemplo:
-
-```text
-RF-04
-
-Esperado:
-sincronizar o registro quando a conexão retornar.
-
-Encontrado:
-registro permanece apenas no SQLite.
-
-GAP-02
-```
-
-O GAP deve explicar:
-
-```text
-Esperado
-   ↓
-Encontrado
-   ↓
-Diferença
-   ↓
-Ação necessária
-   ↓
-Como validar
-```
-
----
-
-<a id="quando-um-requisito-muda"></a>
-
-## Quando um requisito muda
-
-Atualize primeiro o documento principal da informação.
-
-### RF, RNF ou RN
-
-```text
-visao.md
-   ↓
-CA
-   ↓
-EP / US
-   ↓
-TASK
-   ↓
-Código
-   ↓
-RQ-GAP
-```
-
-### Permissão
-
-```text
-rbac.md
-   ↓
-CA
-   ↓
-Implementação
-   ↓
-RQ-GAP
-```
-
-### Interface
-
-```text
-sitemap.md
-   ↓
-responsividade.md
-   ↓
 EP
-   ↓
-Implementação
-   ↓
-RQ-GAP
+└── US
+    ├── TASK
+    ├── TASK
+    └── TASK
+```
+
+Não trate tudo como uma única hierarquia:
+
+```text
+RF → RN → CA → EP → US → TASK    ← evite
+```
+
+Pense em:
+
+```text
+REQUISITOS  ←──── relacionados ────→  TRABALHO
 ```
 
 ---
 
-# Referência rápida
+# 4. Mapa dos documentos
 
-<a id="mapa-dos-documentos"></a>
+| Local | Função |
+| --- | --- |
+| `visao.md` | Define requisitos e CAs |
+| `epicos/` | Organiza o trabalho e direciona o Desenvolvedor |
+| `rbac.md` | Define perfis e permissões |
+| `sitemap.md` | Define interfaces e navegação |
+| `responsividade.md` | Define comportamento responsivo |
+| `relatorio-rq-gap.md` | Registra a análise das entregas |
 
-## Mapa dos documentos
-
-```text
-documentacao/
-│
-├── README.md
-├── visao.md
-├── sitemap.md
-├── rbac.md
-├── responsividade.md
-├── relatorio-rq-gap.md
-│
-└── epicos/
-    ├── EP-01-*.md
-    ├── EP-02-*.md
-    └── ...
-```
-
-| Documento             | Função                             |
-| --------------------- | ---------------------------------- |
-| `visao.md`            | Define requisitos                  |
-| `epicos/`             | Organiza a implementação           |
-| `sitemap.md`          | Define interfaces                  |
-| `rbac.md`             | Define permissões                  |
-| `responsividade.md`   | Define comportamento responsivo    |
-| `relatorio-rq-gap.md` | Analisa requisito vs implementação |
-
-Em resumo:
+Regra rápida:
 
 ```text
-visao.md = define
-epicos/ = organiza
-código = implementa
-RQ-GAP = analisa
+visao.md          = DEFINE
+epicos/           = DIRECIONA
+código            = IMPLEMENTA
+relatorio-rq-gap  = VERIFICA
 ```
 
 ---
 
-<a id="identificadores"></a>
+# 5. Identificadores
 
-## Identificadores
+| Grupo | IDs |
+| --- | --- |
+| **Requisitos** | `RN`, `RF`, `RNF`, `CA` |
+| **Trabalho** | `EP`, `US`, `TASK` |
+| **Análise** | `GAP` |
 
-| ID     | Significado                                 |
-| ------ | ------------------------------------------- |
-| `RN`   | Regra de Negócio                            |
-| `RF`   | Requisito Funcional                         |
-| `RNF`  | Requisito Não Funcional                     |
-| `CA`   | Critério de Aceite                          |
-| `EP`   | Épico                                       |
-| `US`   | User Story                                  |
-| `TASK` | Tarefa                                      |
-| `GAP`  | Problema ou diferença encontrada na análise |
+## Convenção do TimeTracker
 
-Não crie outro identificador para analisar um requisito existente.
-
-Use:
+No TimeTracker:
 
 ```text
-RF-01 → Atendido
-RF-03 → Parcial → GAP-01
-CA-04 → Não verificável
+EP-01 ↔ CA-01
+EP-02 ↔ CA-02
+EP-03 ↔ CA-03
+...
 ```
 
-em vez de criar `RQ-01`, `RQ-02`, etc.
+Cada EP possui um CA correspondente de mesmo número.
+
+Essa é uma **convenção do projeto**, não uma regra geral de requisitos.
 
 ---
 
-<a id="informações-a-definir"></a>
-
-## Informações a definir
-
-Quando uma decisão ainda não foi tomada, registre:
+# Em resumo
 
 ```text
-A definir: [decisão necessária]
+ANALISTA
+
+Define requisitos
+      ↓
+Define CA
+      ↓
+Cria EP
+      ↓
+Indica referências
+      │
+      ▼
+DESENVOLVEDOR
+
+Abre EP
+      ↓
+Consulta referências
+      ↓
+Implementa
+      ↓
+Testa
+      ↓
+Entrega EP
+      │
+      ▼
+ANALISTA
+
+Verifica CA
+      ↓
+Coleta evidência
+      ↓
+Define status
+      ↓
+Registra GAP
+se necessário
 ```
 
-Exemplo:
-
-```text
-A definir: o Colaborador poderá visualizar suas próprias atividades?
-```
-
-Não transforme uma dúvida em requisito aprovado.
+> **O Analista define e direciona. O Desenvolvedor implementa. O Analista verifica o resultado.**
 
 ---
 
-**Última revisão:** 2026-09-06
+**Última revisão:** 2026-09-07
