@@ -51,26 +51,6 @@ O EP deve informar:
 - quais documentos precisam ser consultados;
 - como o comportamento será validado.
 
-Exemplo:
-
-```text
-EP-02 — Detecção de inatividade
-│
-├── CA-02
-│
-├── Requisitos relacionados
-│   ├── RF-03 → visao.md
-│   └── RN-02 → visao.md
-│
-├── Consultar
-│   └── rbac.md → seção [...]
-│
-└── TASKs
-    ├── TASK-01
-    ├── TASK-02
-    └── TASK-03
-```
-
 Não é necessário procurar requisitos pelo repositório inteiro.
 
 > **Siga as referências indicadas no EP.**
