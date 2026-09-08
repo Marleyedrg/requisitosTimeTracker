@@ -37,25 +37,35 @@ Este documento especifica o projeto Time Tracker: agente desktop, backend/API e 
 
 O Time Tracker é uma solução open source corporativa para monitoramento automatizado de atividades em estações de trabalho.
 
+o Time tracker é dividido por:
+  - agente :
+  `Aplicação desktop que monitora atividade de um colaborador, o colaborador também se loga a plataforma, e consegue visualizar tasks. essa aplicação também envia as informações coletadas para a aplicação PWA de dashBoard.` 
+  - dashBoard:
+  `Aplicação PWA que configura o agente e consome os dados enviados pela aplicação do agente de desktop, e mostra estatisticas`
+
 O agente coleta, **de forma não intrusiva**:
 
 - o nome do processo;
 - título da janela ativa;
-- screenshot da janela ativa.
+- movimento e mouse de teclado para definir inatividade;
+- nome de usuario
+- tasks que o usuario estiver envolvido
 
-**Ideia:** fazer um OCR para identificar se há alguma informação sensível do usuário antes de enviar.
 
 #### SQLite
 
-- O banco de dados SQLite entra quando houver uma falha na requisição da API.
+- O banco de dados SQLite salva todas informações registradas, em um intervalo de tempo definido pelo gestor no dashBoard, ele sempre relaciona essas informações a task que usuário estiver ativa naquele definido momento.
 
 #### Backend
 
-- Organiza os dados.
+- Recebe e organiza os dados.
 - Realiza análises estatísticas.
 
 #### Dashboard
 
+- configura o agente
+- cria tasks, e adiciona colaboradores a ela
+- monitora colaboradores
 - Permite a análise de produtividade pelos gestores.
 
 ### 2.2 Problema que Resolve
@@ -63,13 +73,13 @@ O agente coleta, **de forma não intrusiva**:
 | Problema | Impacto informado ou objetivo da solução |
 | --- | --- |
 | Falta de uma visão centralizada das atividades realizadas nas estações de trabalho. | O projeto pretende consolidar dados em uma plataforma web para análise de produtividade. |
-| Necessidade de identificar atividade, inatividade e distribuição de tempo por categoria. | Gestores precisam visualizar colaboradores ativos, aplicações em uso e relatórios de produtividade. |
+| Necessidade de identificar atividade, inatividade e distribuição de tempo por aplicação/sites. | Gestores precisam visualizar colaboradores ativos, aplicações em uso e relatórios de produtividade. |
 | Falhas de rede podem impedir o envio dos registros. | O agente precisa manter os registros pendentes e sincronizá-los quando a conexão voltar. |
 
 ### 2.3 Proposta de Valor
 
-- **Para o gestor:** visualizar atividade em tempo real, configurar o agente, acompanhar métricas e exportar relatórios.
-- **Para o colaborador:** ter o período de atividade monitorado sem captura de teclas, microfone ou câmera e com ícone visível na System Tray.
+- **Para o gestor:** visualizar atividade em tempo estimulada, configurar o agente, acompanhar métricas e exportar relatórios.
+- **Para o colaborador:** ter o período de atividade monitorada de programas/sites e serviços sendo utilizados e com ícone visível na System Tray.
 - **Para a equipe de desenvolvimento:** contar com uma solução open source, documentada e inicializável por Docker Compose.
 
 ## 3. Escopo
@@ -89,7 +99,7 @@ O agente coleta, **de forma não intrusiva**:
 | 7 | Dashboard React/Vite/Tailwind com visão em tempo real, KPIs, distribuição por categoria, timeline, relatórios e exportação CSV/PDF. |
 | 8 | Gestão de palavras-chave de categorização pelo gestor. |
 
-**Limites ou exclusões confirmadas:** não capturar teclas digitadas; não acessar microfone ou câmera; coletar somente nome do processo, screenshot, atividade de mouse e teclado e título da janela; uso em máquinas corporativas. Funcionalidades fora dessa lista não estão determinadas pelo PDF.
+**Limites ou exclusões confirmadas:** não capturar teclas digitadas; não acessar microfone ou câmera; coletar somente nome do processo, atividade de mouse e teclado e título da janela; uso em máquinas corporativas. Funcionalidades fora dessa lista não estão determinadas pelo PDF.
 
 ## 4. Personas
 
@@ -128,14 +138,12 @@ O agente coleta, **de forma não intrusiva**:
 
 | Etapa | Quem executa | Ação ou resposta esperada |
 | --- | --- | --- |
-| 1 | Agente | Lê via Win32 API o nome do processo e o título da janela em primeiro plano, e faz uma screenshot. |
+| 1 | Agente | Lê via Win32 API o nome do processo e o título da janela em primeiro plano.
 | 2 | Agente | Obtém usuário Windows, hostname e estado de atividade/inatividade. |
 | 3 | Agente | Envia o registro ao servidor. |
 | 4 | Backend | Recebe, classifica por palavras-chave e disponibiliza o dado ao dashboard. |
 
 **Resultado final:** registro disponível para consultas analíticas.
-
-![Fluxo de funcionamento do programa](epicos/fluxo_coleta_dados.png)
 
 **Alternativas e falhas:** se a rede falhar, armazenar o registro em SQLite local e sincronizá-lo quando a conexão for restabelecida. O comportamento de confirmação, retry e duplicidade não foi definido.
 
@@ -183,7 +191,6 @@ O agente coleta, **de forma não intrusiva**:
 O sistema deve restringir a coleta a:
 
 - nome do processo;
-- screenshot da tela, sem informações sensíveis;
 - estado de atividade/inatividade com base na interação de mouse e teclado;
 - título da janela;
 - identificadores automáticos de usuário Windows e hostname necessários aos registros.
@@ -385,7 +392,6 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 - **Então:** o agente registra:
   - nome do executável
   - título da janela ativa
-  - screenshot
   - usuário Windows
   - hostname.
 
