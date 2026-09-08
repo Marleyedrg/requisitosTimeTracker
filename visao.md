@@ -111,7 +111,7 @@ O agente coleta, **de forma não intrusiva**:
 
 - Acompanhar quais colaboradores estão online e qual aplicação ou janela está em uso.
 - Consultar métricas e relatórios de produtividade.
-- Configurar intervalo de captura, tempo de inatividade e palavras-chave.
+- Configurar intervalo de captura, tempo de inatividade.
 
 **Necessidades:**
 
@@ -141,11 +141,11 @@ O agente coleta, **de forma não intrusiva**:
 | 1 | Agente | Lê via Win32 API o nome do processo e o título da janela em primeiro plano.
 | 2 | Agente | Obtém usuário Windows, hostname e estado de atividade/inatividade. |
 | 3 | Agente | Envia o registro ao servidor. |
-| 4 | Backend | Recebe, classifica por palavras-chave e disponibiliza o dado ao dashboard. |
+| 4 | Backend | Recebe, classifica a atividade, tempo em atividade, task, tudo ligado a um usuário e disponibiliza o dado ao dashboard. |
 
 **Resultado final:** registro disponível para consultas analíticas.
 
-**Alternativas e falhas:** se a rede falhar, armazenar o registro em SQLite local e sincronizá-lo quando a conexão for restabelecida. O comportamento de confirmação, retry e duplicidade não foi definido.
+**Alternativas e falhas:** se a rede falhar, armazenar mante o registro em SQLite local e sincronizá-lo quando a conexão for restabelecida. O comportamento de confirmação, retry e duplicidade não foi definido.
 
 ### 5.2 Consultar o dashboard
 
@@ -153,7 +153,7 @@ O agente coleta, **de forma não intrusiva**:
 
 **Condição inicial:** API e dashboard disponíveis.
 
-**Gatilho:** gestor acessa o painel ou solicita uma consulta.
+**Gatilho:** gestor acessa o painel.
 
 | Etapa | Quem executa | Ação ou resposta esperada |
 | --- | --- | --- |
@@ -170,7 +170,7 @@ O agente coleta, **de forma não intrusiva**:
 
 **Participantes:** Gestor, dashboard, API e agente desktop.
 
-**Condição inicial:** gestor possui acesso ao painel; demais permissões não foram definidas.
+**Condição inicial:** gestor possui acesso ao painel; 
 
 **Gatilho:** gestor consulta ou atualiza configurações (somente no início da sessão).
 
@@ -180,9 +180,7 @@ O agente coleta, **de forma não intrusiva**:
 | 2 | API | Persiste e disponibiliza a configuração no servidor. |
 | 3 | Agente | Consulta periodicamente as configurações e aplica-as em tempo de execução. |
 
-**Resultado final:** agente utiliza as configurações definidas.
-
-**Alternativas e falhas:** autenticação, validação dos valores, frequência de consulta e comportamento quando a configuração estiver indisponível não foram definidos.
+**Resultado final:** agente utiliza as configurações definidas quando iniciado por um colaborador, e pede que ele faça o login ao sistema e inicie uma task.
 
 ## 6. Regras de Negócio
 
@@ -222,11 +220,11 @@ Quando a conexão com o servidor falhar, os registros devem ser armazenados em S
 | ID | Requisito | Prioridade |
 | --- | --- | --- |
 | RF-01 | O agente deve capturar, via Win32 API, o nome do executável e o título da janela ativa e capturar nome do usuário do Windows e nome da máquina. | Alta |
-| RF-02 | O agente deve enviar cada leitura ao servidor imediatamente e sem acúmulo local durante a operação normal. | Alta |
+| RF-02 | O agente deve armazenar cada leitura ao servidor e armazenar o acúmulo localmente durante a operação normal. | Alta |
 | RF-03 | O agente deve marcar o período como inativo quando o tempo sem interação de mouse ou teclado ultrapassar o limite configurado. | Alta |
-| RF-04 | O agente deve armazenar registros em SQLite quando houver falha de rede e sincronizá-los ao restabelecer a conexão. | Alta |
+| RF-04 | O agente deve continuar armazenando registros em SQLite quando houver falha de rede e sincronizá-los quando restabelecer a conexão. | Alta |
 | RF-05 | O agente deve consultar e aplicar em tempo de execução o intervalo de captura e o tempo de inatividade configurados no servidor. | Alta |
-| RF-06 | O agente deve exibir na System Tray o status da conexão Online ou Offline. | Alta |
+| RF-06 | O agente deve exibir na System Tray o status da conexão Online ou Offline, definido quando estiver em uma com login no sistema e em uma task. | Alta |
 
 ### Módulo: Backend e API
 
@@ -243,7 +241,7 @@ Quando a conexão com o servidor falhar, os registros devem ser armazenados em S
 
 | ID | Requisito | Prioridade |
 | --- | --- | --- |
-| RF-14 | O dashboard deve exibir quais colaboradores estão online e qual aplicativo ou janela está em uso. | Alta |
+| RF-14 | O dashboard deve exibir quais colaboradores estão online (com login no agente e em uma task) e qual aplicativo ou janela está em uso. | Alta |
 | RF-15 | O dashboard deve exibir distribuição de tempo por categoria e total de horas por colaborador. | Alta |
 | RF-16 | O dashboard deve permitir exportar dados em CSV e PDF. | Média |
 
@@ -284,30 +282,18 @@ Escalabilidade, disponibilidade, acessibilidade, retenção e descarte de dados,
 
 ### 9.1 Dashboard web
 
-- **Acesso:** gestor, conforme perfil citado no PDF; autenticação e autorização não especificadas.
+- **Acesso:** gestor, faz autenticação na plataforma onde se liga a tasks que estão ligadas a colaboradores do sistema.
 - **Elementos:** seletor de data, indicador de status da API, cards de horas monitoradas, colaboradores ativos e software mais usado, gráfico de rosca, tabela em tempo real, timeline e exportação CSV/PDF.
-- **Validação:** não definida.
-- **Carregamento:** não definido.
 - **Sucesso:** apresentar dados retornados pela API.
-- **Erro:** não definido.
-- **Estado vazio:** não definido.
-- **Restrições de interação:** ações de configuração e exportação são associadas ao gestor, mas a matriz detalhada não foi definida.
 - **Referências:** RF-10 a RF-16.
 
 ### 9.2 Agente na System Tray
 
 - **Acesso:** colaborador da estação Windows.
-- **Elementos:** ícone visível e menu de contexto com status Online ou Offline.
-- **Validação, carregamento, sucesso, erro e estado vazio:** não se aplica ou não determinado pelo PDF.
+- **Elementos:** ícone visível e menu de contexto com status Online ou Offline, definido se o usuário estiver com login no sistema e atribuido a uma task.
+- **autenticação** colaborador deve estar autenticado ao sistema.
 - **Referências:** RF-06, RN-01.
 
-### 9.3 Experiência geral
-
-- **Navegação:** dashboard como SPA React; rotas não especificadas.
-- **Mensagens:** não definidas.
-- **Adaptação de tela:** a interface é web, mas breakpoints e comportamentos responsivos não são especificados no PDF.
-- **Acessibilidade:** não definida.
-- **Confirmações:** não definidas.
 
 ## 10. Requisitos Condicionantes
 
@@ -324,54 +310,42 @@ Escalabilidade, disponibilidade, acessibilidade, retenção e descarte de dados,
 
 ### Fluxo normal
 
-Durante a operação normal, cada leitura coletada pelo agente será enviada diretamente à API, sem acúmulo local.
+Durante a operação normal, o agente identificará mudanças na atividade do usuário. Quando uma mudança for detectada, o registro será armazenado localmente em SQLite e enviado à API.
 
 ```text
-Agente → HTTPS → API → PostgreSQL
+Mudança detectada → SQLite → HTTPS → API → PostgreSQL
 ```
 
-O SQLite não participa do fluxo normal de persistência.
+Após a confirmação do recebimento pela API, o registro poderá ser removido da fila local.
 
 ### Contingência de rede
 
-Caso a comunicação com a API falhe, as leituras serão armazenadas localmente em SQLite.
+Caso a comunicação com a API falhe, o registro permanecerá armazenado localmente em SQLite.
 
 ```text
-Agente → tentativa de envio → falha
-                           ↓
-                        SQLite
+Mudança detectada → SQLite → tentativa de envio → falha
+                       ↓
+                registro pendente
 ```
 
 Quando a conexão for restabelecida, os registros pendentes deverão ser sincronizados com o backend.
 
 ```text
-SQLite → API → PostgreSQL
+SQLite → HTTPS → API → PostgreSQL
 ```
+
+Após a confirmação do recebimento pela API, os registros sincronizados poderão ser removidos da fila local.
 
 ### Responsabilidades dos componentes
 
 | Componente | Responsabilidade |
 | --- | --- |
-| Agente | Coletar informações da máquina e da janela ativa, detectar inatividade, enviar leituras e controlar a contingência offline. |
+| Agente | Colaborador fazr login, e se conectar a uma atividade, Coletar informações da máquina e da janela ativa, detectar inatividade, enviar leituras e controlar a contingência offline. |
 | SQLite | Armazenar temporariamente leituras que não puderam ser enviadas ao servidor. |
 | API / Backend | Receber, validar, processar e persistir os dados enviados pelos agentes. |
 | PostgreSQL | Manter os dados centralizados e persistentes do sistema. |
 | Dashboard | Consultar a API e apresentar métricas, gráficos e informações ao gestor. |
 
-### Pontos em aberto
-
-Ainda precisam ser definidos:
-
-- autenticação e autorização;
-- contrato de comunicação entre agente e API;
-- formato exato dos dados enviados;
-- política de retry;
-- idempotência e tratamento de duplicidades;
-- ordenação dos registros durante a sincronização offline;
-- política de retenção dos dados;
-- navegadores suportados;
-- breakpoints da interface;
-- método de medição de desempenho.
 
 ## 12. Critérios de Aceite
 
@@ -387,13 +361,14 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 **Requisitos relacionados:** RF-01, RN-01, RNF-01.
 
-- **Dado que:** o agente está em execução em uma máquina Windows 10/11 x64.
+- **Dado que:** o agente está em execução em uma máquina Windows, com colaborador com login e assumindo uma task.
 - **Quando:** o agente estiver ativo e mandar uma requisição para fazer captura dos metadados
 - **Então:** o agente registra:
   - nome do executável
   - título da janela ativa
   - usuário Windows
-  - hostname.
+  - hostname
+  - tempo naquela atividade/janela
 
 - [ ] Critério verificado e atendido.
 
@@ -421,10 +396,10 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 - **Dado que:** o agente possui um registro que precisa ser enviado.
 - **Quando:** a comunicação com o servidor falha.
-- **Então:** o registro é armazenado temporariamente no SQLite.
+- **Então:** o registro em lote continua a ser armazenado temporariamente no SQLite.
 - **E Quando:** a conexão com o servidor for restabelecida.
 - **Então:** os registros pendentes são enviados ao backend
-- **E:** após a sincronização bem-sucedida, os registros são removidos do armazenamento temporário.
+
 
 - [ ] Critério verificado e atendido.
 
@@ -441,9 +416,9 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 - **Então:** o sistema permite visualizar:
   - colaboradores ativos
   - aplicativo ou janela em uso
-  - distribuição de tempo por categoria
+  - distribuição de tempo por categoria, task, usuarios
   - total de horas
-  - dados filtrados por data ou colaborador
+  - dados filtrados por data,colaborador e tasks 
   - exportação em CSV
   - exportação em PDF.
 
@@ -460,9 +435,6 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 - **Dado que:** o agente está em execução em uma máquina corporativa.
 - **Quando:** atividades são coletadas e transmitidas.
 - **Então:** o sistema garante que:
-  - teclas digitadas não são capturadas
-  - microfone não é acessado
-  - câmera não é acessada
   - a coleta permanece limitada aos dados definidos na RN-01
   - a comunicação com o servidor ocorre via HTTPS
   - o ícone do agente permanece visível na System Tray.
@@ -479,7 +451,7 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 - **Dado que:** o agente está conectado ao servidor.
 - **Quando:** uma nova leitura é coletada.
-- **Então:** o registro é enviado diretamente ao servidor, sem ser acumulado no SQLite durante a operação normal.
+- **Então:** o lote de registro é armazenado no SQLite e enviado ao servidor em lote durante a operação normal.
 
 - [ ] Critério verificado e atendido.
 
@@ -510,9 +482,9 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 **Requisitos relacionados:** RF-06.
 
 - **Dado que:** o agente está em execução.
-- **Quando:** existe comunicação com o servidor.
+- **Quando:** existe comunicação com o servidor, e usuário em com login no sistema e em uma task.
 - **Então:** a System Tray indica o status Online.
-- **E Quando:** a comunicação com o servidor não estiver disponível.
+- **E Quando:** a comunicação com o servidor não estiver disponível, e usuário sem login no sistema e sem task ativas.
 - **Então:** a System Tray indica o status Offline.
 
 - [ ] Critério verificado e atendido.
@@ -525,8 +497,8 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 **Requisitos relacionados:** RN-03, RF-08, RF-09.
 
-- **Dado que:** existem palavras-chave de categorização configuradas.
-- **Quando:** o backend recebe um registro de atividade.
+- **Dado que:** existem palavras-chave de categorização configuradas relacionadas a uma task.
+- **Quando:** o backend recebe um registro de atividade de um colaborador em uma task.
 - **Então:** o registro é classificado em uma das categorias: Desenvolvimento, Design, Comunicação, Social ou Outros.
 - **E Quando:** o gestor cria ou edita uma palavra-chave.
 - **Então:** a nova regra fica disponível para a categorização dos registros.
