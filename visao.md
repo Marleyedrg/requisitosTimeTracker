@@ -272,6 +272,32 @@ Quando a conexão com o servidor falhar, os registros devem ser armazenados em S
 
 **\*\*Exceções:\*\*** política de retry, ordenação e duplicidade não definida.
 
+### RN-05 — Estados do colaborador
+
+O sistema deve diferenciar o **status de monitoramento** do **estado de atividade** do colaborador.
+
+| Estado    | Definição                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------- |
+| `Online`  | O colaborador está autenticado no agente, conectado ao servidor e com uma task ativa.       |
+| `Offline` | O colaborador não possui uma sessão de monitoramento ativa no sistema.                      |
+| `Ativo`   | O colaborador apresentou interação recente com mouse ou teclado.                            |
+| `Inativo` | O tempo sem interação com mouse ou teclado ultrapassou o limite de inatividade configurado. |
+
+Um colaborador pode estar `Online` e `Inativo` ao mesmo tempo.
+
+```text id="4b0cfm"
+Colaborador
+│
+├── status de monitoramento
+│   ├── Online
+│   └── Offline
+│
+└── Estado de atividade
+    ├── Ativo
+    └── Inativo
+```
+
+
 \## 7. Requisitos Funcionais
 
 \### Módulo: Agente desktop
@@ -316,7 +342,7 @@ Quando a conexão com o servidor falhar, os registros devem ser armazenados em S
 
 \| --- | --- | --- |
 
-\| RF-14 | O dashboard deve exibir quais colaboradores estão online (com login no agente e em uma task) e qual aplicativo ou janela está em uso. | Alta |
+\| RF-14 | O dashboard deve exibir o status Online/Offline e o estado Ativo/Inativo dos colaboradores, além do aplicativo ou janela em uso e da task ativa. | Alta |
 
 \| RF-15 | O dashboard deve exibir distribuição de tempo por categoria e total de horas por colaborador. | Alta |
 
@@ -548,7 +574,9 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 \- **\*\*Então:\*\*** o sistema permite visualizar:
 
-  \- colaboradores ativos
+  \-  colaboradores Online/Offline
+
+  \- estado Ativo/Inativo de cada colaborador
 
   \- aplicativo ou janela em uso
 
@@ -630,7 +658,7 @@ Cada CA está relacionado aos requisitos que justificam sua existência.
 
 \---
 
-\### CA-08 — Status de conexão do agente
+\### CA-08 — status de monitoramento do agente
 
 **\*\*Requisitos relacionados:\*\*** RF-06.
 
