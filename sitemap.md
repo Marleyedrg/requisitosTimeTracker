@@ -1,231 +1,336 @@
 # Sitemap — Time Tracker
 
-**Projeto:** Time Tracker Open Source
-
-**Versão:** 1.0.0 (MVP)
-
-**Status:** Rascunho
-
+**Projeto:** Time Tracker Open Source  
+**Versão:** 1.0.0  
+**Status:** Rascunho  
 **Data:** Setembro de 2026
 
-## Legenda de acesso por perfil
+---
 
-| Símbolo | Perfil      |
-| ------- | ----------- |
-| `[P1]`  | Gestor      |
-| `[P2]`  | Colaborador |
+## 1. Perfis
 
-### Estados do colaborador
+O sistema possui dois perfis:
 
-O sistema diferencia o **status de conexão** do **estado de atividade**:
-
-| Estado | Significado |
+| Perfil | Acesso principal |
 | --- | --- |
-| `Online` | Colaborador autenticado, com o agente conectado ao sistema e uma Task ativa. |
-| `Offline` | Colaborador não está conectado ao sistema ou não possui uma sessão ativa. |
-| `Ativo` | Colaborador apresentou interação recente com mouse ou teclado. |
-| `Inativo` | O tempo sem interação com mouse ou teclado ultrapassou o limite configurado. |
+| Gestor | Dashboard PWA |
+| Colaborador | Agente Desktop |
 
-> Um colaborador pode estar `Online` e `Inativo` ao mesmo tempo.
+---
 
-> Rotas, autenticação e pontos de entrada não especificados permanecem como **A definir**.
+## 2. Dashboard PWA — Gestor
 
-## 1. Área pública
+O Dashboard é utilizado pelo gestor para organizar sua equipe, criar tasks e consultar registros.
 
-### Dashboard PWA
-
-O Gestor cria uma conta e realiza login pelo Dashboard.
-
-```text id="ftxpxd"
-Dashboard
-   │
-   ├── Criar conta
-   │
-   └── Login
-          ↓
-    Área do Gestor
+```text
+Dashboard PWA
+│
+├── Criar conta
+├── Login
+│
+├── Painel
+├── Colaboradores
+├── Tasks
+├── Relatórios
+└── Configurações
 ```
 
-### Agente Desktop
+A criação da conta do gestor deve estar sempre disponível através de **e-mail**.
 
-O Colaborador realiza login no sistema através do Agente Desktop.
+---
 
-Após o login, o colaborador seleciona uma Task disponível para iniciar o monitoramento da atividade.
+## 3. Painel
 
-```text id="qfjg8h"
-Agente
-   │
-   └── Login
-        ↓
-   Selecionar Task
-        ↓
-   Monitoramento
-```
+O painel apresenta uma visão rápida da equipe.
 
-> O fluxo de criação da conta do Colaborador ainda precisa ser definido.
-
-## 2. Área do Gestor
-
-**Acesso:** `[P1]` Gestor
-
-**Ponto de entrada:** `2.1 Painel de acompanhamento`
-
-| #   | Tela                           | Descrição                                                                                                                                                                      | Épico/US  |
-| --- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
-| 2.1 | **Painel de acompanhamento** | Exibe status do sistema, seletor de data, KPIs de horas monitoradas, colaboradores Online/Offline, estado Ativo/Inativo, software em uso, distribuição por categoria e atividades dos colaboradores. 
-| 2.2 | **Tasks**                      | Permite criar e gerenciar Tasks e associar colaboradores a elas.                                                                                                               
-| 2.3 | **Configurações do sistema**   | Permite consultar e atualizar tempo de inatividade, regras de categorização e demais configurações disponíveis para o agente.                                                  
-| 2.4 | **Relatório de produtividade** | Apresenta horas por colaborador, Task e categoria, com filtros e exportação em CSV e PDF.                                                                                      
-
-### 2.1 Painel de acompanhamento
-
-```text id="8hxd6y"
+```text
 Painel
+
 ├── Colaboradores Online/Offline
 ├── Estado Ativo/Inativo
-├── Atividade atual
-├── Software mais utilizado
-├── Horas monitoradas
-├── Distribuição por categoria
-└── Timeline de atividades
+├── Task ativa
+├── Serviço monitorado atual
+├── Tempo registrado
+└── Possíveis horas extras
 ```
 
-### 2.2 Tasks
+O gestor visualiza somente colaboradores associados a ele.
 
-```text id="yhvslm"
+---
+
+## 4. Colaboradores
+
+```text
+Colaboradores
+
+├── Lista da equipe
+├── Código de associação
+│
+└── Colaborador
+    ├── Status
+    ├── Task atual
+    ├── Atividade/Inatividade
+    ├── Jornada
+    ├── Histórico
+    └── Possível hora extra
+```
+
+### Associação
+
+A associação inicial entre gestor e colaborador é realizada através de um **código de 6 dígitos**.
+
+```text
+GESTOR
+  ↓
+gera código
+  ↓
+123456
+  ↓
+COLABORADOR
+  ↓
+informa código
+  ↓
+associação concluída
+```
+
+Após a associação, o gestor poderá adicionar o colaborador às suas tasks.
+
+---
+
+## 5. Tasks
+
+```text
 Tasks
-├── Visualizar Tasks
-├── Criar Task
-├── Editar Task
-└── Associar colaboradores
+
+├── Visualizar
+├── Criar
+├── Editar
+├── Associar colaboradores
+└── Definir serviços monitorados
 ```
 
-### 2.3 Configurações do sistema
+Cada task define quais colaboradores poderão executá-la e quais serviços serão monitorados.
 
-```text id="g2h1ec"
-Configurações
-├── Tempo de inatividade
-└── Regras de categorização
-```
+---
 
-### 2.4 Relatório de produtividade
+## 6. Relatórios
 
-```text id="lzc8l3"
+```text
 Relatórios
-├── Filtrar por data
-├── Filtrar por colaborador
-├── Filtrar por Task
-├── Distribuição por categoria
-├── Total de horas
-├── Exportar CSV
-└── Exportar PDF
+
+├── Filtros
+│   ├── Período
+│   ├── Colaborador
+│   └── Task
+│
+├── Tempo por task
+├── Tempo ativo/inativo
+├── Serviços monitorados
+├── Jornada
+├── Possíveis horas extras
+│
+└── Exportar
+    ├── CSV
+    └── PDF
 ```
 
-## 3. Área do Colaborador
+A tela deve possuir um **botão de exportação**, permitindo ao gestor escolher entre os formatos CSV e PDF.
 
-**Acesso:** `[P2]` Colaborador na estação Windows
+Os relatórios respeitam o escopo de acesso do gestor.
 
-**Ponto de entrada:** `3.1 Login no Agente`
+---
 
-| #   | Tela ou visualização      | Descrição                                                                                                          | Épico/US  |
-| --- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ | --------- |
-| 3.1 | **Login no Agente**       | Permite que o colaborador realize login no sistema através do Agente Desktop.                                      
-| 3.2 | **Seleção de Task**       | Exibe as Tasks disponíveis para o colaborador e permite selecionar em qual está trabalhando.                       
-| 3.3 | **Agente na System Tray** | Exibe o status Online/Offline, o estado Ativo/Inativo e a Task ativa. O agente executa em segundo plano o monitoramento e a sincronização dos registros. 
+## 7. Configurações
 
+As configurações de acompanhamento são definidas pelo gestor.
+
+```text
+Configurações
+
+├── Jornada
+│   ├── Dias de trabalho
+│   ├── Entrada
+│   ├── Saída
+│   ├── Intervalo
+│   └── Carga horária
+│
+└── Limite de inatividade
+```
+
+---
+
+## 8. Agente Desktop — Colaborador
+
+Ao iniciar o Agente Desktop, o sistema verifica se já existe um registro de usuário na estação.
+
+```text
+Agente Desktop
+      ↓
+Existe usuário registrado?
+   │
+   ├── Não → Criar conta
+   │
+   └── Sim → Acessar conta
+```
+
+A criação de conta pelo Agente é destinada ao **Colaborador**.
+
+---
+
+## 9. Associação ao Gestor
+
+Caso o colaborador ainda não esteja associado a um gestor, deverá informar o código de 6 dígitos recebido.
+
+```text
+Conta do colaborador
+        ↓
+Código do gestor
+        ↓
+Associação
+        ↓
+Minhas Tasks
+```
+
+Somente após essa associação o colaborador poderá ser incluído nas tasks do gestor.
+
+---
+
+## 10. Início da Task
+
+```text
+Minhas Tasks
+     ↓
+Selecionar Task
+     ↓
+Condições de monitoramento
+     ↓
+Confirmar ciência
+     ↓
+Iniciar Task
+     ↓
+Online
+```
+
+Antes do início, devem ser apresentados:
+
+- descrição da task;
+- serviços monitorados;
+- informações registradas;
+- atividade/inatividade.
+
+O monitoramento somente começa após a confirmação do colaborador.
+
+---
+
+## 11. Task ativa
+
+Durante a execução:
+
+```text
+Task ativa
+
+├── Serviços monitorados
+├── Estado Ativo/Inativo
+├── Tempo registrado
+├── Trocar task
+└── Encerrar task
+```
+
+O colaborador não pode possuir duas tasks ativas simultaneamente.
+
+Ao encerrar a task, o monitoramento também é encerrado.
+
+---
+
+## 12. System Tray
+
+A System Tray funciona como ponto principal de acompanhamento do Agente.
+
+```text
 System Tray
+
 ├── Task ativa
 ├── Status Online/Offline
 ├── Estado Ativo/Inativo
-└── Monitoramento
-
-### Fluxo do Colaborador
-
-```text id="65vbgr"
-Login
-  ↓
-Selecionar Task
-  ↓
-Task ativa
-  ↓
-Monitoramento
-  ↓
-System Tray
+├── Serviços monitorados
+├── Histórico
+├── Trocar task
+└── Encerrar task
 ```
 
-Enquanto uma Task estiver ativa, os registros de atividade gerados pelo agente serão relacionados a ela.
+### Histórico
 
-> Não está definida uma área web específica para o Colaborador.
+O colaborador poderá consultar um histórico em formato **TXT**.
 
-## 4. Área administrativa
+Esse histórico deve apresentar somente as informações efetivamente enviadas ao sistema.
 
-**Não definida.**
+```text
+Histórico
 
-O escopo atual não estabelece um perfil de Administrador separado do Gestor.
+10:00 → VS Code → Ativo → enviado
+10:32 → Chrome  → Ativo → enviado
+10:48 → VS Code → Inativo → enviado
+```
 
-## 5. Fluxos transversais
+---
 
-| #   | Comportamento                    | Descrição                                                                                                                  | Épico/US  |
-| --- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------- |
-| 5.1 | **Atualização de configurações** | O agente consulta as configurações disponíveis no servidor e aplica os valores recebidos.                                  
-| 5.2 | **Registro e sincronização**     | Quando uma mudança de atividade é detectada, o registro é armazenado no SQLite e enviado ao backend.                       
-| 5.3 | **Sincronização offline**        | Em caso de falha de comunicação, os registros permanecem no SQLite e são sincronizados após o restabelecimento da conexão. 
-| 5.4 | **Categorização automática**     | O backend classifica os registros por palavras-chave nas categorias Desenvolvimento, Design, Comunicação, Social e Outros. 
-| 5.5 | **Relação com Task**             | Os registros de atividade são relacionados à Task ativa do colaborador.                                                    
-| 5.6 | **Exportação de relatórios**     | Os dados de produtividade podem ser exportados nos formatos CSV e PDF.                                                     
-| 5.7 | **Detecção de inatividade** | O agente considera o colaborador Ativo enquanto houver interação recente com mouse ou teclado. Quando o tempo sem interação ultrapassar o limite configurado, seu estado passa para Inativo. | A definir |
+## 13. Fluxos internos
 
-## 6. Visão geral da navegação
+### Registro e sincronização
 
-```text id="7rwdnj"
-Time Tracker
+```text
+Serviço monitorado
+        ↓
+Registro
+        ↓
+SQLite
+        ↓
+Backend
+```
+
+Caso a comunicação falhe, os registros permanecem localmente até a sincronização.
+
+### Atividade e inatividade
+
+```text
+Interação recente
+      ↓
+    Ativo
+
+Sem interação acima do limite
+      ↓
+   Inativo
+```
+
+O limite é configurado pelo gestor.
+
+---
+
+## 14. Visão Geral
+
+```text
+TIME TRACKER
 │
-├── Dashboard PWA [P1]
+├── Dashboard PWA — Gestor
 │   │
-│   ├── Criar conta
-│   └── Login
-│       │
-│       ├── Painel de acompanhamento
-│       ├── Tasks
-│       │   ├── Criar Task
-│       │   ├── Editar Task
-│       │   └── Associar colaboradores
-│       │
-│       ├── Configurações
-│       │   ├── Tempo de inatividade
-│       │   └── Regras de categorização
-│       │
-│       └── Relatórios
-│           ├── Filtros
-│           ├── CSV
-│           └── PDF
+│   ├── Criar conta / Login
+│   ├── Painel
+│   ├── Colaboradores
+│   │   └── Código de associação
+│   ├── Tasks
+│   ├── Relatórios
+│   │   └── Exportar CSV/PDF
+│   └── Configurações
+│       ├── Jornada
+│       └── Inatividade
 │
-└── Agente Desktop [P2]
+└── Agente Desktop — Colaborador
     │
-    └── Login
-        │
-        ├── Selecionar Task
-        │
+    ├── Criar conta / Acessar
+    ├── Associar ao gestor
+    ├── Minhas Tasks
+    ├── Condições da Task
+    └── Task ativa
         └── System Tray
-            │
-            ├── Task ativa
-            ├── Estado do agente
-            └── Monitoramento
+            └── Histórico TXT
 ```
-
-## 7. Pendências
-
-* Definir autenticação e autorização.
-* Definir as rotas do Dashboard PWA.
-* Definir o fluxo de criação de conta do Colaborador.
-* Definir como as contas dos colaboradores serão associadas aos gestores ou à organização.
-* Definir se o Colaborador pode trocar ou encerrar uma Task durante a execução.
-* Definir o comportamento do agente quando nenhuma Task estiver ativa.
-* Definir se **Relatório de produtividade** e **Configurações do sistema** serão telas independentes ou componentes do painel.
-* Definir permissões detalhadas para Gestor e Colaborador.
-* Confirmar se haverá uma área web específica para o Colaborador.
-* Avaliar a necessidade de um perfil Administrador separado do Gestor.
-* Definir o fluxo e os detalhes da exportação em CSV e PDF.
-* Definir as regras de retry, duplicidade e idempotência da sincronização.
-
-**Última revisão:** 2026-09-08

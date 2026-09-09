@@ -10,267 +10,168 @@
 
 Este documento define os **Requisitos Não Funcionais (RNF)** do Time Tracker.
 
-Os RNFs estabelecem características de qualidade, segurança, desempenho, compatibilidade e operação que devem ser respeitadas pelo sistema.
+Os requisitos estabelecem características de qualidade, segurança, compatibilidade, desempenho e operação do sistema.
 
 ---
 
 ## 2. Requisitos Não Funcionais
 
-### RNF-01 — Compatibilidade do Agente
+### RNF-01 — Compatibilidade
 
 O Agente Desktop deve ser compatível com:
 
 - Windows 10 x64;
 - Windows 11 x64.
 
-A coleta de informações da aplicação em execução e da atividade do usuário deve funcionar nessas plataformas.
+---
+
+### RNF-02 — Desempenho
+
+O Agente Desktop deve operar com baixo impacto sobre os recursos da estação.
+
+Durante os testes devem ser avaliados:
+
+- uso de CPU;
+- uso de memória;
+- uso de disco.
+
+Os limites quantitativos deverão ser definidos após medições em ambiente de teste.
 
 ---
 
-### RNF-02 — Desempenho do Agente
+### RNF-03 — Comunicação segura
 
-O Agente Desktop deve operar com baixo impacto sobre os recursos da estação do colaborador.
+Toda comunicação entre os componentes do sistema deve utilizar HTTPS.
 
-O monitoramento não deve provocar degradação perceptível no uso normal da máquina.
+Isso se aplica a:
 
-Devem ser avaliados durante os testes:
-
-- consumo de CPU;
-- consumo de memória;
-- utilização de disco;
-- impacto provocado pela coleta e sincronização.
-
-Os limites quantitativos deverão ser definidos após medições do agente em ambiente de teste.
+- Agente ↔ API;
+- Dashboard ↔ API.
 
 ---
 
-### RNF-03 — Comunicação Segura
+### RNF-04 — Proteção de autenticação
 
-Toda comunicação entre os componentes do Time Tracker deve ocorrer através de conexão segura.
+Senhas não devem ser armazenadas em texto puro.
 
-```text
-Agente ──HTTPS──→ API
-
-Dashboard ──HTTPS──→ API
-```
-
-Não deve ser utilizada comunicação HTTP sem proteção para transmissão de dados do sistema.
+Tokens, credenciais e informações de sessão não devem ser expostos indevidamente em armazenamento ou logs.
 
 ---
 
-### RNF-04 — Proteção de Credenciais e Sessões
+### RNF-05 — Controle de acesso
 
-Credenciais de autenticação não devem ser armazenadas em texto puro.
-
-Tokens e informações utilizadas para manutenção de sessão devem ser armazenados e transmitidos de forma segura.
-
-Informações sensíveis de autenticação também não devem ser registradas indevidamente em logs.
-
----
-
-### RNF-05 — Controle de Acesso
-
-O controle de acesso aos dados deve ser aplicado pelo backend.
-
-A interface não deve ser considerada o único mecanismo de restrição.
+As permissões de acesso aos dados devem ser validadas pelo backend.
 
 O sistema deve garantir que:
 
-```text
-COLABORADOR
-     ↓
-seus próprios dados
-
-GESTOR
-     ↓
-colaboradores sob sua responsabilidade
-```
-
-Requisições sem autorização adequada devem ser rejeitadas.
+- o colaborador acesse somente seus próprios dados;
+- o gestor acesse somente os colaboradores sob sua responsabilidade.
 
 ---
 
-### RNF-06 — Privacidade e Minimização
+### RNF-06 — Privacidade e minimização
 
-O sistema deve tratar somente as informações necessárias para as funcionalidades previstas.
+O sistema deve coletar somente as informações necessárias para as funcionalidades previstas.
 
-O monitoramento não deve capturar o conteúdo das interações do colaborador.
-
-A utilização de mouse e teclado deve limitar-se à identificação de:
-
-```text
-Ativo / Inativo
-```
-
-sem armazenar conteúdo digitado ou detalhes das interações.
-
-A implementação deve seguir os princípios de finalidade, necessidade, minimização e transparência definidos para o produto.
+A interação com mouse e teclado deve ser utilizada somente para identificação de atividade e inatividade, sem armazenamento do conteúdo das interações.
 
 ---
 
-### RNF-07 — Transparência do Monitoramento
+### RNF-07 — Transparência
 
-O Agente Desktop deve manter o estado do monitoramento visível ao colaborador enquanto estiver em execução.
+O estado do monitoramento deve permanecer visível ao colaborador enquanto uma task estiver ativa.
 
-O colaborador deve conseguir identificar facilmente:
+O colaborador deve conseguir consultar:
 
-- se existe uma task ativa;
-- se o monitoramento está ativo;
-- quais serviços estão sendo monitorados;
-- seu estado de atividade/inatividade.
-
-O agente deve permanecer acessível através da **System Tray** enquanto estiver em execução.
+- task ativa;
+- serviços monitorados;
+- estado do monitoramento;
+- estado Ativo/Inativo.
 
 ---
 
-### RNF-08 — Resiliência a Falhas de Rede
+### RNF-08 — Resiliência
 
-Falhas temporárias de comunicação com o backend não devem causar perda dos registros já produzidos pelo agente.
-
-O agente deve continuar funcionando localmente quando a API estiver temporariamente indisponível.
+Falhas temporárias de comunicação com o backend não devem causar perda dos registros produzidos pelo agente.
 
 Os registros pendentes devem permanecer disponíveis para sincronização posterior.
 
 ---
 
-### RNF-09 — Integridade da Sincronização
+### RNF-09 — Integridade da sincronização
 
-A sincronização deve preservar a integridade dos registros enviados pelo agente.
+A sincronização deve preservar a integridade dos registros e evitar:
 
-O mecanismo de sincronização deve evitar, quando possível:
-
-- perda de registros;
-- envio incorreto;
-- inconsistência entre registros locais e servidor;
-- duplicação causada por novas tentativas de envio.
-
-A estratégia específica de identificação e idempotência deverá ser definida na arquitetura.
+- perda de dados;
+- inconsistências;
+- duplicações indevidas.
 
 ---
 
-### RNF-10 — Proteção do Armazenamento Local
+### RNF-10 — Proteção do armazenamento local
 
-Os registros armazenados localmente pelo agente devem possuir acesso restrito ao contexto necessário para execução do Time Tracker.
-
-O armazenamento local não deve conter:
-
-- senhas;
-- credenciais em texto puro;
-- tokens expostos em logs.
-
-Os registros locais sincronizados devem ser tratados conforme a política de armazenamento definida para o agente.
+Os registros armazenados localmente pelo agente devem possuir acesso restrito e não devem armazenar senhas ou credenciais em texto puro.
 
 ---
 
 ### RNF-11 — Rastreabilidade
 
-Eventos relevantes para auditoria devem possuir informações suficientes para identificar:
+Eventos relevantes devem possuir informações suficientes para identificar:
 
-```text
-quem
-↓
-realizou o evento
-↓
-quando
-```
-
-Devem possuir rastreabilidade, quando aplicável:
-
-- início de task;
-- encerramento de task;
-- confirmação de ciência;
-- alteração do escopo de monitoramento;
-- alterações realizadas pelo gestor.
+- quem realizou a ação;
+- qual ação foi realizada;
+- quando ocorreu.
 
 ---
 
 ### RNF-12 — Usabilidade
 
-As principais ações do colaborador no agente devem possuir apresentação simples e compreensível.
+As principais ações do Agente Desktop e do Dashboard devem possuir interface clara e de fácil compreensão.
 
-O início de uma task deve permitir que o colaborador identifique facilmente:
-
-- qual task está iniciando;
-- quais serviços serão monitorados;
-- quais informações serão registradas.
-
-Mensagens relacionadas ao monitoramento devem utilizar linguagem clara e evitar termos técnicos desnecessários.
+As informações relacionadas ao monitoramento devem ser apresentadas ao colaborador de forma objetiva e compreensível.
 
 ---
 
-### RNF-13 — Disponibilidade da Documentação da API
+### RNF-13 — Documentação da API
 
-O backend deve disponibilizar documentação das operações expostas pela API.
-
-A documentação deve permitir à equipe de desenvolvimento identificar:
-
-- endpoints;
-- parâmetros;
-- estruturas enviadas e recebidas;
-- códigos de resposta.
-
-Quando utilizado FastAPI, a documentação poderá ser disponibilizada através do Swagger/OpenAPI.
+O backend deve disponibilizar documentação dos endpoints, parâmetros, estruturas de dados e respostas da API.
 
 ---
 
-### RNF-14 — Implantação Reproduzível
+### RNF-14 — Implantação
 
-Os componentes de servidor do Time Tracker devem possuir uma forma reproduzível de inicialização do ambiente.
-
-A infraestrutura deverá permitir inicialização dos serviços através do Docker Compose conforme definido na arquitetura do projeto.
-
----
-
-### RNF-15 — Manutenibilidade
-
-O sistema deve possuir separação clara entre seus principais componentes:
-
-```text
-Agente Desktop
-      │
-Backend / API
-      │
-Dashboard
-```
-
-Alterações em um componente devem evitar dependência direta desnecessária da implementação interna dos demais componentes.
-
-Os contratos de comunicação devem ser documentados.
+Os componentes de servidor devem possuir uma forma reproduzível de inicialização através do Docker Compose.
 
 ---
 
 ## 3. Resumo
 
-| ID | Requisito | Categoria |
-| --- | --- | --- |
-| RNF-01 | Compatibilidade Windows 10/11 x64 | Compatibilidade |
-| RNF-02 | Baixo impacto de recursos | Desempenho |
-| RNF-03 | Comunicação via HTTPS | Segurança |
-| RNF-04 | Proteção de credenciais e sessões | Segurança |
-| RNF-05 | Controle de acesso no backend | Segurança |
-| RNF-06 | Privacidade e minimização | Privacidade |
-| RNF-07 | Monitoramento visível ao colaborador | Usabilidade / Transparência |
-| RNF-08 | Operação durante falha de rede | Resiliência |
-| RNF-09 | Integridade da sincronização | Confiabilidade |
-| RNF-10 | Proteção do armazenamento local | Segurança |
-| RNF-11 | Rastreabilidade | Auditoria |
-| RNF-12 | Clareza da interface | Usabilidade |
-| RNF-13 | Documentação da API | Manutenibilidade |
-| RNF-14 | Implantação reproduzível | Portabilidade |
-| RNF-15 | Separação entre componentes | Manutenibilidade |
+| ID | Requisito |
+| --- | --- |
+| RNF-01 | Compatibilidade Windows |
+| RNF-02 | Desempenho do agente |
+| RNF-03 | Comunicação segura |
+| RNF-04 | Proteção de autenticação |
+| RNF-05 | Controle de acesso |
+| RNF-06 | Privacidade e minimização |
+| RNF-07 | Transparência |
+| RNF-08 | Resiliência |
+| RNF-09 | Integridade da sincronização |
+| RNF-10 | Proteção do armazenamento local |
+| RNF-11 | Rastreabilidade |
+| RNF-12 | Usabilidade |
+| RNF-13 | Documentação da API |
+| RNF-14 | Implantação |
 
 ---
 
-## 4. Pontos Ainda Não Definidos
+## 4. Pontos Pendentes
 
-Os seguintes valores não devem ser definidos arbitrariamente e precisam ser validados durante o desenvolvimento ou testes:
+Os seguintes valores deverão ser definidos após testes e validação:
 
-- limite máximo aceitável de CPU;
-- limite máximo aceitável de memória;
-- tempo máximo aceitável de sincronização;
-- período de retenção dos dados;
-- estratégia exata contra duplicação durante sincronização;
+- limite máximo de CPU;
+- limite máximo de memória;
 - tempo máximo de resposta da API;
-- navegadores oficialmente suportados pelo Dashboard PWA.
-
-Enquanto esses valores não forem definidos e validados, devem permanecer registrados como **pendências**, evitando transformar estimativas em requisitos oficiais.
+- tempo máximo de sincronização;
+- período de retenção dos dados;
+- navegadores suportados pelo Dashboard.

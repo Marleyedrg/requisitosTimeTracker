@@ -6,25 +6,26 @@
 
 ---
 
-## 1. Visão Geral
+## 1. O que é o Time Tracker
 
-O **Time Tracker** é uma solução open source corporativa para acompanhamento de **tasks, atividades e jornada de trabalho** em estações Windows.
+O **Time Tracker** é uma solução open source corporativa para acompanhamento de:
+
+- tasks;
+- atividade e inatividade;
+- tempo de utilização;
+- jornada de trabalho.
 
 O sistema possui dois perfis:
 
 - **Colaborador:** executa tasks e acompanha seus próprios registros;
-- **Gestor:** organiza a equipe, cria tasks, define o escopo de monitoramento e consulta relatórios.
+- **Gestor:** organiza sua equipe, cria tasks, define o monitoramento e consulta relatórios.
 
-O Time Tracker é composto por:
+A solução é composta por:
 
 ```text
 Agente Desktop
       ↓
-    HTTPS
-      ↓
 Backend / API
-      ↓
-PostgreSQL
       ↓
 Dashboard PWA
 ```
@@ -35,404 +36,295 @@ O **Dashboard PWA** é utilizado pelo gestor.
 
 ---
 
-## 2. Princípio do Monitoramento
+## 2. Contas e associação
+
+O colaborador utiliza o Agente Desktop.
+
+Caso não exista um usuário registrado na estação, o agente permite criar uma conta de colaborador.
+
+O gestor possui no Dashboard a opção de criar uma conta utilizando e-mail.
+
+A associação inicial entre colaborador e gestor é realizada através de um **código de 6 dígitos**.
+
+```text
+GESTOR
+  ↓
+gera código
+  ↓
+COLABORADOR
+  ↓
+informa código
+  ↓
+associação
+```
+
+Após a associação, o gestor poderá adicionar o colaborador às suas tasks.
+
+---
+
+## 3. Monitoramento baseado em tasks
 
 A **task é a unidade central do monitoramento**.
 
-Não deve existir monitoramento genérico ou permanente da estação.
+Não existe monitoramento sem uma task ativa.
 
-Todo monitoramento deve:
+O gestor define para cada task:
 
-- estar associado a uma task ativa;
-- possuir finalidade definida;
-- possuir aplicações previamente definidas;
-- ser informado ao colaborador antes do início;
-- limitar a coleta ao necessário para aquela atividade.
-
-> **Nenhum monitoramento deve ocorrer sem uma task ativa e sem que o colaborador saiba previamente quais aplicações e informações serão monitoradas.**
-
----
-
-## 3. Tasks
-
-O gestor cria as tasks através do Dashboard.
-
-Cada task deve definir:
-
-- título e descrição;
+- descrição;
 - colaboradores associados;
-- aplicações ou serviços monitorados;
-- condições de monitoramento.
+- serviços ou aplicações monitorados.
 
-Exemplo:
+O colaborador visualiza somente as tasks às quais estiver associado.
 
-```text
-TASK-24 — Desenvolvimento do Dashboard
-
-Colaboradores:
-- Marley
-- Ana
-
-Aplicações monitoradas:
-- Visual Studio Code
-- Chrome
-- Terminal
-
-Dados:
-- aplicação utilizada
-- duração
-- atividade/inatividade
-```
-
-Após realizar login no Agente Desktop, o colaborador visualiza somente as tasks às quais foi atribuído.
+Aplicações fora do escopo da task devem ser ignoradas.
 
 ---
 
-## 4. Transparência e Início da Task
+## 4. Transparência
 
-Selecionar uma task não inicia imediatamente o monitoramento.
+Antes de iniciar uma task, o colaborador deve visualizar:
 
-Antes do início, o colaborador deve visualizar:
-
-- qual task será executada;
-- finalidade da atividade;
-- aplicações monitoradas;
-- informações coletadas;
-- uso de mouse e teclado para identificar atividade/inatividade;
-- informações que não serão coletadas.
-
-Exemplo:
+- a task selecionada;
+- os serviços monitorados;
+- as informações registradas;
+- como atividade e inatividade são identificadas.
 
 ```text
-TASK-24 — Desenvolvimento do Dashboard
-
-Monitorado:
-✓ Visual Studio Code
-✓ Chrome
-✓ Terminal
-
-Registrado:
-✓ aplicação em utilização
-✓ duração
-✓ atividade/inatividade
-
-Não coletamos:
-✗ conteúdo digitado
-✗ teclas pressionadas
-✗ screenshots
-✗ câmera
-✗ microfone
-
+Selecionar Task
+      ↓
+Visualizar condições
+      ↓
 [ Cancelar ]
-[ Estou ciente e iniciar task ]
+[ Estou ciente e iniciar ]
 ```
 
-A confirmação representa a **ciência das condições apresentadas**, não devendo ser tratada pelo sistema como definição automática da base legal para o tratamento dos dados.
+O monitoramento somente começa após a confirmação de ciência do colaborador.
 
-A organização responsável pelo uso da ferramenta deve definir a finalidade e a hipótese legal adequada para o tratamento.
-
-O sistema deve registrar a versão das condições apresentadas ao colaborador no início da task.
+Alterações no escopo de uma task ativa devem ser informadas antes de serem aplicadas.
 
 ---
 
-## 5. Escopo da Coleta
+## 5. Informações registradas
 
-Durante uma task, somente aplicações pertencentes ao seu escopo podem gerar informações detalhadas.
-
-Exemplo:
-
-```text
-TASK-24
-
-VS Code  → monitorado
-Chrome   → monitorado
-Spotify  → fora do escopo
-Terminal → monitorado
-```
-
-Aplicações fora do escopo não devem gerar para o gestor informações como:
-
-- nome da aplicação;
-- título da janela;
-- conteúdo;
-- detalhes de utilização.
-
-O sistema poderá apenas identificar que naquele período não houve atividade dentro das aplicações previstas pela task, quando necessário.
-
----
-
-## 6. Informações Coletadas
-
-Quando previstas pela task, poderão ser registrados:
+Durante uma task poderão ser registrados:
 
 - colaborador;
-- task;
-- sessão da task;
-- aplicação autorizada;
-- horário de início;
-- horário de término;
-- duração;
-- atividade/inatividade;
 - usuário Windows;
-- hostname da estação.
+- task;
+- serviço ou aplicação monitorada;
+- início;
+- término;
+- duração;
+- estado Ativo/Inativo.
 
-O título da janela somente deverá ser coletado quando existir necessidade definida e previamente informada.
-
-Mouse e teclado serão utilizados somente para determinar se houve interação recente.
+Mouse e teclado são utilizados somente para verificar se houve interação recente.
 
 ```text
-Houve interação?
+Interação recente?
       ↓
    sim / não
       ↓
 Ativo / Inativo
 ```
 
-O sistema não deve coletar:
+O conteúdo das interações não deve ser coletado.
 
-- conteúdo das teclas digitadas;
+Também não fazem parte do monitoramento:
+
+- teclas digitadas;
 - senhas;
-- screenshots automáticos;
+- screenshots;
 - áudio;
 - câmera;
-- conteúdo de mensagens;
-- conteúdo de arquivos;
-- histórico completo de navegação;
-- dados detalhados de aplicações fora da task.
+- conteúdo de mensagens ou arquivos.
 
 ---
 
-## 7. Registro e Sincronização
+## 6. Execução da task
 
-O agente deve registrar as atividades como **períodos**, evitando leituras repetidas quando nada mudou.
-
-Exemplo:
-
-```text
-Visual Studio Code
-10:00 → 10:32
-
-Chrome
-10:32 → 10:48
-
-Visual Studio Code
-10:48 → 11:02
-```
-
-Os registros devem ser persistidos localmente antes da transmissão.
-
-```text
-Atividade
-   ↓
-SQLite
-   ↓
-HTTPS
-   ↓
-API
-   ↓
-PostgreSQL
-```
-
-O SQLite atua como armazenamento temporário e fila de sincronização.
-
-Caso exista falha de comunicação, os registros permanecem localmente e são enviados quando a conexão for restabelecida.
-
----
-
-## 8. Estados e Jornada
-
-O sistema deve diferenciar:
-
-```text
-Autenticação
-↓
-Autenticado / Não autenticado
-
-Conexão
-↓
-Conectado / Sem conexão
-
-Task
-↓
-Ativa / Sem task
-
-Atividade
-↓
-Ativo / Inativo
-```
-
-Para o gestor, o colaborador será considerado **Online** quando possuir uma task efetivamente iniciada.
+O colaborador é considerado **Online** para o gestor somente enquanto possuir uma task ativa.
 
 ```text
 Login
   ↓
-Seleciona task
+Selecionar Task
   ↓
-Visualiza condições
+Confirmar ciência
   ↓
-Confirma ciência
+Iniciar Task
   ↓
-Inicia task
-  ↓
-ONLINE
+Online
 ```
 
-Ao encerrar a task, o monitoramento é encerrado e o colaborador passa a ser apresentado como Offline.
+O colaborador não pode possuir duas tasks ativas simultaneamente.
 
-O gestor também poderá definir a jornada dos colaboradores, incluindo:
-
-- dias de trabalho;
-- entrada;
-- saída;
-- intervalo;
-- carga horária.
-
-Atividades realizadas após o término previsto poderão ser identificadas como **possível hora extra**.
+Ao trocar ou encerrar a task, o monitoramento atual deve ser finalizado.
 
 ---
 
-## 9. Dashboard e Relatórios
+## 7. Registro e sincronização
 
-O gestor utiliza o Dashboard PWA para:
+As atividades são registradas como períodos de utilização.
 
-- organizar sua equipe;
+```text
+VS Code
+10:00 → 10:32
+
+Chrome
+10:32 → 10:48
+```
+
+Os registros são armazenados localmente antes da transmissão.
+
+```text
+Registro
+   ↓
+SQLite
+   ↓
+Backend
+   ↓
+PostgreSQL
+```
+
+Em caso de falha de comunicação, os registros permanecem localmente até que possam ser sincronizados.
+
+---
+
+## 8. Jornada e configurações
+
+O gestor configura:
+
+- dias de trabalho;
+- horário de entrada;
+- horário de saída;
+- intervalo;
+- carga horária;
+- limite de inatividade.
+
+Atividades realizadas após o término previsto da jornada poderão ser identificadas como **possível hora extra**.
+
+---
+
+## 9. Dashboard e relatórios
+
+O gestor utiliza o Dashboard para:
+
+- acompanhar sua equipe;
 - criar e editar tasks;
-- atribuir colaboradores;
-- definir aplicações monitoradas;
-- acompanhar colaboradores Online;
+- associar colaboradores;
+- definir serviços monitorados;
 - consultar atividade e inatividade;
-- consultar jornadas;
+- acompanhar jornadas;
 - consultar possíveis horas extras;
-- gerar relatórios;
-- exportar informações.
+- gerar relatórios.
 
-O gestor somente deve visualizar os colaboradores sob sua responsabilidade.
+Os relatórios podem apresentar:
 
-O colaborador poderá consultar seus próprios registros.
-
-Os relatórios poderão incluir:
-
-- jornada;
-- tasks executadas;
+- tasks;
 - tempo por task;
-- tempo ativo;
-- tempo inativo;
-- aplicações monitoradas;
+- serviços monitorados;
+- tempo ativo/inativo;
+- jornada;
 - possíveis horas extras.
 
-A exportação poderá ser realizada inicialmente em:
+A tela de relatórios possui um **botão de exportação**, permitindo escolher entre:
 
 - CSV;
 - PDF.
 
+O gestor visualiza somente os colaboradores associados a ele.
+
 ---
 
-## 10. Privacidade, Segurança e Direção do Produto
+## 10. Histórico do colaborador
 
-O Time Tracker deve considerar proteção de dados desde a concepção.
+O colaborador pode consultar pela **System Tray** um histórico em formato TXT.
 
-Os principais princípios são:
+Esse histórico apresenta somente as informações que foram efetivamente enviadas ao sistema.
+
+```text
+10:00 → VS Code → Ativo → enviado
+10:32 → Chrome  → Ativo → enviado
+```
+
+---
+
+## 11. Princípios do produto
 
 ### Transparência
 
-O colaborador deve saber **quando, por que e sobre quais atividades está sendo monitorado**.
+O colaborador deve saber quando e sobre quais atividades está sendo monitorado.
+
+### Escopo limitado
+
+Somente serviços definidos na task devem ser monitorados.
 
 ### Minimização
 
-Somente informações necessárias à finalidade da task devem ser coletadas.
-
-### Escopo Limitado
-
-Aplicações fora da task não devem gerar informações detalhadas.
+Somente informações necessárias devem ser coletadas.
 
 ### Segurança
 
-A comunicação entre Agente, API e Dashboard deve utilizar HTTPS.
+Os dados devem ser protegidos durante armazenamento, transmissão e consulta.
 
-Os dados armazenados localmente e no backend devem possuir proteção contra acesso não autorizado.
+### Controle de acesso
 
-### Controle de Acesso
+O colaborador acessa seus próprios dados.
 
-```text
-Colaborador
-↓
-seus próprios dados
-
-Gestor
-↓
-sua equipe
-```
-
-As restrições de acesso devem ser aplicadas pelo backend.
-
-### Retenção
-
-Os dados não devem permanecer armazenados indefinidamente sem necessidade.
-
-A organização deverá definir políticas de retenção compatíveis com suas finalidades e obrigações.
-
-### Rastreabilidade
-
-Eventos importantes, como início da task, ciência das condições e alterações no escopo de monitoramento, devem possuir histórico.
+O gestor acessa somente os dados dos colaboradores associados a ele.
 
 ### Atividade não significa produtividade
 
-O Time Tracker registra **tempo, atividade, jornada e execução de tasks**.
+O Time Tracker registra atividade, tempo, tasks e jornada.
 
-Essas informações podem auxiliar análises, mas o sistema não deve concluir automaticamente que maior tempo de atividade representa maior produtividade.
+Esses dados podem auxiliar análises, mas não representam automaticamente produtividade.
 
 ---
 
-## Fluxo Geral
+## 12. Fluxo Geral
 
 ```text
 GESTOR
   ↓
-cria task
+cria conta
   ↓
-define colaboradores
-  ↓
-define aplicações
-  ↓
-disponibiliza task
+gera código
   ↓
 COLABORADOR
   ↓
-faz login
+cria/acessa conta
   ↓
-seleciona task
+associa-se ao gestor
+  ↓
+recebe Tasks
+  ↓
+seleciona Task
   ↓
 visualiza condições
   ↓
 confirma ciência
   ↓
-inicia task
+inicia Task
   ↓
-ONLINE
+monitoramento
   ↓
-monitoramento limitado à task
-  ↓
-SQLite
-  ↓
-HTTPS / API
-  ↓
-PostgreSQL
+registros
   ↓
 Dashboard
 ```
 
 ---
 
-## Direção do Produto
+## 13. Direção do produto
 
-O Time Tracker não deve evoluir para uma ferramenta de monitoramento indiscriminado do colaborador.
+O Time Tracker não deve ser uma ferramenta de monitoramento indiscriminado da estação do colaborador.
 
-Sua finalidade é utilizar registros técnicos necessários e previamente informados para apoiar:
+Sua finalidade é apoiar:
 
 - organização do trabalho;
 - acompanhamento de tasks;
 - acompanhamento da jornada;
 - análise de atividade;
-- geração de relatórios;
+- geração de relatórios.
 
-mantendo limites claros sobre **o que é monitorado, quando o monitoramento ocorre e quem pode acessar os dados**.
+> **O monitoramento deve ocorrer somente dentro de uma task, com escopo definido e conhecido pelo colaborador.**

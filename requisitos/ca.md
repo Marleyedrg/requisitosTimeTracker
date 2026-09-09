@@ -6,183 +6,152 @@
 
 ---
 
-## 1. Objetivo
+## CA-01 — Conta e associação
 
-Este documento define os **Critérios de Aceite (CA)** do Time Tracker.
+**Requisitos relacionados:** RF-01, RF-02, RF-03, RF-04, RF-05.
 
-Os critérios verificam os principais fluxos do sistema e indicam quando uma funcionalidade pode ser considerada atendida.
-
----
-
-## 2. Critérios de Aceite
-
-### CA-01 — Autenticação e acesso às tasks
-
-**Requisitos relacionados:** RF-01, RF-02, RF-03
-
-- **Dado que:** o Agente Desktop está em execução;
-- **Quando:** o colaborador realizar login com credenciais válidas;
+- **Dado que:** um usuário acessa o Time Tracker;
+- **Quando:** realiza o fluxo inicial de acesso;
 - **Então:**
-  - o colaborador deve ser autenticado;
-  - o usuário Windows deve ser identificado;
-  - devem ser apresentadas somente as tasks atribuídas ao colaborador.
+  - o colaborador pode criar uma conta pelo Agente quando não existir usuário registrado na estação;
+  - o gestor pode criar uma conta por e-mail pelo Dashboard;
+  - o gestor pode gerar um código de associação de 6 dígitos;
+  - o colaborador pode informar esse código;
+  - após a associação, o colaborador passa a pertencer à equipe do gestor.
 
 - [ ] Critério verificado e atendido.
 
 ---
 
-### CA-02 — Início da task e transparência
+## CA-02 — Tasks e início do monitoramento
 
-**Requisitos relacionados:** RF-04, RF-05, RF-06, RF-16
+**Requisitos relacionados:** RF-06, RF-07, RF-08, RF-09, RF-10.
 
-- **Dado que:** o colaborador está autenticado e selecionou uma task;
-- **Quando:** solicitar seu início;
-- **Então:** o agente deve apresentar:
-  - descrição da task;
-  - serviços monitorados;
-  - informações registradas;
-  - informação sobre atividade/inatividade por mouse e teclado.
-
-- **E:** o monitoramento somente deve iniciar após a confirmação de ciência.
-
-- **E:** após o início:
-  - a task deve ficar ativa;
-  - o colaborador deve aparecer como Online;
-  - as condições de monitoramento devem permanecer disponíveis para consulta.
+- **Dado que:** o colaborador está associado a um gestor e possui uma task atribuída;
+- **Quando:** seleciona uma task;
+- **Então:**
+  - somente tasks atribuídas ao colaborador são exibidas;
+  - as condições de monitoramento são apresentadas;
+  - os serviços monitorados são informados;
+  - as informações registradas são informadas;
+  - o colaborador confirma sua ciência antes do início;
+  - o monitoramento começa somente após essa confirmação.
 
 - [ ] Critério verificado e atendido.
 
 ---
 
-### CA-03 — Monitoramento da atividade
+## CA-03 — Monitoramento da atividade
 
-**Requisitos relacionados:** RF-09, RF-10, RF-11, RF-12, RF-13, RF-14, RF-15
+**Requisitos relacionados:** RF-11, RF-12, RF-13, RF-14.
 
 - **Dado que:** existe uma task ativa;
-- **Quando:** o agente identificar uma aplicação em execução;
+- **Quando:** o colaborador utiliza a estação;
 - **Então:**
-  - deve verificar se ela corresponde a um serviço definido na task;
-  - aplicações fora da task devem ser ignoradas;
-  - aplicações pertencentes à task devem gerar registro de utilização.
-
-- **E:** o registro deve permitir identificar:
-  - colaborador;
-  - usuário Windows;
-  - task;
-  - serviço;
-  - início;
-  - término;
-  - duração;
-  - estado Ativo/Inativo.
-
-- **E:** quando o tempo sem interação atingir o limite configurado, o colaborador deve ser marcado como Inativo.
-
-- **E:** ao ocorrer nova interação, deve voltar para Ativo.
+  - somente aplicações pertencentes ao escopo da task são registradas;
+  - aplicações fora do escopo são ignoradas;
+  - os períodos de utilização são registrados;
+  - o registro pode conter colaborador, usuário Windows, task, serviço, início, término e duração;
+  - o estado Ativo/Inativo é determinado pela interação com mouse ou teclado;
+  - o conteúdo das interações não é coletado.
 
 - [ ] Critério verificado e atendido.
 
 ---
 
-### CA-04 — Encerramento e troca de task
+## CA-04 — Estado e execução da task
 
-**Requisitos relacionados:** RF-07, RF-08, RF-17
+**Requisitos relacionados:** RF-15, RF-16, RF-17.
 
-- **Dado que:** existe uma task ativa;
-- **Quando:** o colaborador encerrá-la;
+- **Dado que:** o colaborador possui uma task em execução;
+- **Quando:** consulta, encerra ou troca a task;
 - **Então:**
-  - o período atual deve ser finalizado;
-  - o monitoramento deve ser encerrado;
-  - o colaborador deve deixar de aparecer como Online.
-
-- **E:** ao iniciar outra task:
-  - a task anterior deve estar encerrada;
-  - as condições da nova task devem ser apresentadas;
-  - uma nova confirmação de ciência deve ocorrer.
-
-- **E:** o colaborador não deve possuir duas tasks ativas simultaneamente.
+  - o estado atual do monitoramento é exibido;
+  - o gestor visualiza o colaborador como Online enquanto houver uma task ativa;
+  - o colaborador não pode possuir duas tasks ativas simultaneamente;
+  - ao encerrar a task, o monitoramento também é encerrado;
+  - ao trocar de task, a anterior é finalizada antes do início da nova.
 
 - [ ] Critério verificado e atendido.
 
 ---
 
-### CA-05 — Armazenamento e sincronização
+## CA-05 — Armazenamento e sincronização
 
-**Requisitos relacionados:** RF-18, RF-19, RF-20, RF-21
+**Requisitos relacionados:** RF-18, RF-19.
 
-- **Dado que:** o agente produziu registros de atividade;
-- **Quando:** houver comunicação com o servidor;
-- **Então:** os registros devem ser enviados e confirmados pelo backend.
-
-- **Quando:** a comunicação estiver indisponível;
+- **Dado que:** registros são produzidos pelo agente;
+- **Quando:** ocorre comunicação com o backend;
 - **Então:**
-  - os registros devem permanecer armazenados localmente;
-  - o monitoramento deve continuar;
-  - nenhuma informação pendente deve ser perdida.
-
-- **E:** quando a comunicação retornar, os registros pendentes devem ser sincronizados.
-
-- [ ] Critério verificado e atendido.
-
----
-
-### CA-06 — Gestão de tasks
-
-**Requisitos relacionados:** RF-22, RF-23, RF-24, RF-25
-
-- **Dado que:** o gestor está autenticado no Dashboard;
-- **Quando:** criar ou editar uma task;
-- **Então:** deve conseguir definir:
-  - título;
-  - descrição;
-  - colaboradores;
-  - serviços ou aplicações monitorados.
-
-- **E:** somente colaboradores associados devem visualizar a task no agente.
-
-- **E:** alterações no escopo de uma task em execução devem ser informadas ao colaborador antes de serem aplicadas.
+  - os registros permanecem armazenados localmente até confirmação do servidor;
+  - uma falha de comunicação não provoca perda dos registros;
+  - registros pendentes permanecem disponíveis;
+  - a sincronização é retomada quando a comunicação for restabelecida.
 
 - [ ] Critério verificado e atendido.
 
 ---
 
-### CA-07 — Jornada, equipe e relatórios
+## CA-06 — Jornada e inatividade
 
-**Requisitos relacionados:** RF-26, RF-27, RF-28, RF-29, RF-30, RF-31, RF-32, RF-33, RF-34, RF-35, RF-36, RF-37, RF-38
+**Requisitos relacionados:** RF-20, RF-21, RF-22.
 
-- **Dado que:** existem colaboradores e registros disponíveis;
-- **Quando:** o gestor acessar o Dashboard;
-- **Então:** deve conseguir:
-  - visualizar somente os colaboradores sob sua responsabilidade;
-  - identificar colaboradores Online;
-  - acompanhar tasks;
-  - consultar atividade e inatividade;
-  - consultar jornadas;
-  - identificar possíveis horas extras;
-  - consultar relatórios;
-  - exportar relatórios em CSV e PDF.
-
-- **E:** o colaborador deve conseguir consultar somente seus próprios registros.
-
-- [ ] Critério verificado e atendido.
-
----
-
-### CA-08 — Segurança, privacidade e operação
-
-**Requisitos relacionados:** RNF-01 a RNF-15
-
-- **Dado que:** o Time Tracker está em funcionamento;
-- **Quando:** houver coleta, armazenamento, transmissão ou consulta de dados;
+- **Dado que:** o gestor possui colaboradores associados;
+- **Quando:** configura as condições de acompanhamento;
 - **Então:**
-  - o agente deve funcionar em Windows 10/11 x64;
-  - a comunicação com a API deve utilizar HTTPS;
-  - credenciais não devem ser armazenadas em texto puro;
-  - o controle de acesso deve ser aplicado pelo backend;
-  - o estado do monitoramento deve permanecer visível ao colaborador;
-  - falhas de rede não devem provocar perda dos registros;
-  - o agente deve operar sem degradação perceptível da estação;
-  - somente informações necessárias ao monitoramento definido devem ser tratadas.
+  - pode definir a jornada do colaborador;
+  - pode definir o limite de inatividade;
+  - o agente utiliza o limite configurado para determinar o estado Inativo;
+  - atividades após o término previsto da jornada podem ser identificadas como possível hora extra.
 
 - [ ] Critério verificado e atendido.
 
 ---
+
+## CA-07 — Consulta, relatórios e exportação
+
+**Requisitos relacionados:** RF-23, RF-24, RF-25.
+
+- **Dado que:** existem registros disponíveis;
+- **Quando:** colaborador ou gestor consultam os dados;
+- **Então:**
+  - o colaborador visualiza somente seus próprios registros;
+  - o gestor visualiza somente os colaboradores associados a ele;
+  - o gestor pode consultar relatórios de tasks, atividade, jornada e possíveis horas extras;
+  - a tela de relatórios possui um botão de exportação;
+  - o gestor pode escolher entre CSV e PDF.
+
+- [ ] Critério verificado e atendido.
+
+---
+
+## CA-08 — Histórico do colaborador
+
+**Requisitos relacionados:** RF-26.
+
+- **Dado que:** o agente já enviou registros ao sistema;
+- **Quando:** o colaborador acessa o histórico pela System Tray;
+- **Então:**
+  - o histórico é apresentado em formato TXT;
+  - somente informações efetivamente enviadas ao sistema são exibidas;
+  - o histórico pertence ao próprio colaborador.
+
+- [ ] Critério verificado e atendido.
+
+---
+
+## CA-09 — Privacidade e segurança
+
+**Requisitos relacionados:** RNF aplicáveis.
+
+- **Dado que:** o agente está executando uma task;
+- **Quando:** informações são coletadas, armazenadas ou transmitidas;
+- **Então:**
+  - aplicações fora do escopo da task não são registradas;
+  - teclas digitadas não são capturadas;
+  - câmera, microfone e screenshots não fazem parte da coleta;
+  - mouse e teclado são utilizados somente para identificar atividade/inatividade;
+  - a comunicação com o servidor utiliza HTTPS;
+  - as restrições de acesso aos dados são aplicadas pelo sistema.
+
+- [ ] Critério verificado e atendido.

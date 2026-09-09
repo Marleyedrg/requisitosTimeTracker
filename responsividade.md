@@ -1,97 +1,162 @@
 # Responsividade — Time Tracker
 
-**Projeto:** Time Tracker Open Source
-**Versão:** 1.0.0 (MVP)
-**Status:** Parcial
+**Projeto:** Time Tracker Open Source  
+**Versão:** 1.0.0  
+**Status:** Rascunho  
 **Data:** Setembro de 2026
 
-## 1. Visão geral
+---
 
-O Time Tracker possui um dashboard web para gestores, desenvolvido com **React, Vite, Tailwind CSS e Recharts**.
+## 1. Objetivo
 
-O escopo atual não define dispositivos prioritários, navegadores suportados, largura mínima, breakpoints ou protótipos responsivos. Portanto, este documento registra os componentes conhecidos e as decisões de responsividade ainda necessárias.
+Este documento define as diretrizes de responsividade do **Dashboard PWA** do Time Tracker.
 
-> O agente desktop, destinado ao Windows 10/11 x64, não faz parte do escopo de responsividade web.
+O Agente Desktop não faz parte deste escopo.
 
-## 2. Breakpoints
+---
 
-Ainda não há breakpoints definidos para o dashboard.
+## 2. Diretriz geral
 
-| Faixa         | Largura   | Comportamento |
-| ------------- | --------- | ------------- |
-| Menor         | A definir | A definir     |
-| Intermediária | A definir | A definir     |
-| Maior         | A definir | A definir     |
+O Dashboard deve se adaptar a diferentes larguras de tela sem comprometer:
 
-Também devem ser definidos:
+- leitura das informações;
+- acesso às funcionalidades;
+- navegação;
+- gráficos;
+- tabelas;
+- formulários.
 
-* base de medição: viewport ou contêiner;
-* menor largura suportada;
-* pontos de mudança de layout.
+Não deve existir transbordamento horizontal desnecessário na página.
 
-## 3. Comportamento por componente
+---
 
-| Componente               | Função                                                             | Comportamento responsivo |
-| ------------------------ | ------------------------------------------------------------------ | ------------------------ |
-| **Header**               | Seletor de data e status da API                                    | A definir                |
-| **Cards de KPI**         | Horas monitoradas, colaboradores ativos e software mais utilizado  | A definir                |
-| **Gráfico de rosca**     | Distribuição das atividades por categoria                          | A definir                |
-| **Tabela em tempo real** | Exibe colaborador, máquina, aplicativo, janela, categoria e status | A definir                |
-| **Timeline**             | Distribui as atividades ao longo do expediente                     | A definir                |
-| **Exportação**           | Permite exportar relatórios em CSV e PDF                           | A definir                |
+## 3. Breakpoints
 
-Componentes não especificados no escopo atual, como sidebar, modais e formulários, não são considerados requisitos até que sua necessidade seja confirmada.
+Os breakpoints específicos ainda serão definidos durante a implementação.
 
-## 4. Critérios de aceitação
+A interface deverá considerar pelo menos três comportamentos:
 
-Os critérios deverão ser validados após a definição dos breakpoints e implementação da interface.
+| Faixa | Comportamento esperado |
+| --- | --- |
+| Tela pequena | Conteúdo empilhado e navegação compacta |
+| Tela média | Distribuição intermediária dos componentes |
+| Tela grande | Aproveitamento amplo do espaço disponível |
 
-A responsividade deverá considerar:
+Os valores exatos serão definidos conforme os testes da interface.
 
-* ausência de transbordamento horizontal indesejado;
-* legibilidade e acesso às informações em diferentes larguras;
-* comportamento da tabela em telas menores;
-* adaptação de cards, gráficos e timeline;
-* preservação das ações disponíveis no dashboard;
-* acessibilidade e navegação por teclado;
-* navegadores e ambientes suportados.
+---
 
-**Verificação atual:** não realizada, pois ainda não há implementação ou evidências de testes disponíveis.
+## 4. Componentes principais
 
-## 5. Protótipo
+### Painel
 
-**Ferramenta:** A definir
-**Telas contempladas:** painel de acompanhamento, configurações e relatório, conforme [sitemap.md](sitemap.md).
-**Frames e estados:** A definir
+Cards e informações de acompanhamento devem reorganizar-se conforme o espaço disponível.
 
-## 6. Convenções de frontend
+```text
+Tela grande
 
-| Aspecto                       | Definição                            |
-| ----------------------------- | ------------------------------------ |
-| **Tecnologias**               | React, Vite, Tailwind CSS e Recharts |
-| **Estratégia de estilos**     | Tailwind CSS                         |
-| **Breakpoints**               | A definir                            |
-| **Componentes reutilizáveis** | A definir                            |
-| **Preservação de estado**     | A definir                            |
-| **Estratégia de testes**      | A definir                            |
+[ Card ][ Card ][ Card ][ Card ]
 
-## 7. Referências cruzadas
 
-| Referência               | Relação                             |
-| ------------------------ | ----------------------------------- |
-| [visao.md](visao.md)     | RF-14 a RF-16 e RNF-01 a RNF-07     |
-| [sitemap.md](sitemap.md) | Telas e componentes do dashboard    |
-| PDF, seção 8             | Componentes principais do dashboard |
+Tela pequena
+
+[ Card ]
+[ Card ]
+[ Card ]
+[ Card ]
+```
+
+---
+
+### Tabelas
+
+Tabelas com muitas informações devem manter acesso ao conteúdo em telas menores.
+
+Quando necessário, poderão utilizar:
+
+- redução de colunas visíveis;
+- reorganização das informações;
+- rolagem horizontal no componente.
+
+---
+
+### Gráficos
+
+Gráficos devem ajustar sua largura ao espaço disponível sem perder legibilidade.
+
+---
+
+### Formulários
+
+Formulários de:
+
+- colaboradores;
+- tasks;
+- jornada;
+- configurações;
+
+devem reorganizar campos conforme a largura da tela.
+
+---
+
+### Relatórios
+
+Filtros e ações devem permanecer acessíveis em diferentes larguras.
+
+O botão de exportação CSV/PDF deve continuar disponível.
+
+---
+
+## 5. Navegação
+
+A navegação deve permitir acesso às principais áreas:
+
+```text
+Painel
+Colaboradores
+Tasks
+Relatórios
+Configurações
+```
+
+Em telas menores, a navegação poderá assumir uma apresentação compacta.
+
+A forma visual será definida durante a implementação.
+
+---
+
+## 6. Critérios gerais
+
+A interface responsiva deve garantir:
+
+- conteúdo legível;
+- ações acessíveis;
+- ausência de sobreposição entre componentes;
+- adaptação de cards, tabelas, gráficos e formulários;
+- manutenção das funcionalidades disponíveis;
+- navegação utilizável por teclado.
+
+---
+
+## 7. Tecnologias
+
+O Dashboard utiliza:
+
+- React;
+- Vite;
+- Tailwind CSS;
+- Recharts.
+
+A estratégia de responsividade deverá utilizar os recursos disponíveis no frontend definido pelo projeto.
+
+---
 
 ## 8. Pendências
 
-* Definir dispositivos e larguras prioritárias.
-* Definir largura mínima suportada.
-* Definir breakpoints e mudanças de layout.
-* Definir comportamento responsivo dos componentes.
-* Definir navegadores e ambientes suportados.
-* Definir requisitos de acessibilidade e navegação por teclado.
-* Criar ou definir protótipos responsivos.
-* Definir estratégia e critérios de teste de responsividade.
+Ainda precisam ser definidos durante implementação e testes:
 
-**Última revisão:** 2026-09-06
+- valores exatos dos breakpoints;
+- largura mínima suportada;
+- navegadores suportados;
+- comportamento final das tabelas em telas pequenas;
+- protótipos ou referências visuais para cada tamanho de tela.

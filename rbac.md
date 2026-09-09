@@ -1,120 +1,146 @@
-# RBAC — Controle de Acesso Baseado em Perfil
+# RBAC — Time Tracker
 
-**Projeto:** Time Tracker Open Source
-**Versão:** 1.0.0 (MVP)
-**Status:** Rascunho
+**Projeto:** Time Tracker Open Source  
+**Versão:** 1.0.0  
+**Status:** Rascunho  
 **Data:** Setembro de 2026
+
+---
 
 ## 1. Objetivo
 
-Existem dois perfis:
+Este documento define as permissões de acesso dos perfis do Time Tracker.
 
-| Perfil          | Descrição                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| **Gestor**      | Acompanha atividades dos colaboradores, consulta relatórios e altera configurações do sistema. |
-| **Colaborador** | Utiliza a estação Windows monitorada pelo agente.                                              |
+O sistema possui dois perfis:
 
-> A forma de autenticação e atribuição desses perfis ainda precisa ser definida.
+- **Gestor**
+- **Colaborador**
 
----
-
-## 2. Permissões
-
-### Dashboard e relatórios
-
-| Ação                     | Gestor | Colaborador | Referência   |
-| ------------------------ | ------ | ----------- | ------------ |
-| Acessar dashboard        | Sim    | A definir   | RF-10, RF-14 |
-| Visualizar atividades    | Sim    | A definir   | RF-10        |
-| Consultar sumário diário | Sim    | A definir   | RF-11        |
-| Filtrar por colaborador  | Sim    | Não         | RF-11        |
-| Exportar CSV/PDF         | Sim    | A definir   | RF-16        |
-
-### Configurações
-
-| Ação                         | Gestor    | Colaborador | Referência       |
-| ---------------------------- | --------- | ----------- | ---------------- |
-| Consultar configurações      | Sim       | Não         | RF-09, RF-12     |
-| Alterar intervalo de captura | Sim       | Não         | RF-12            |
-| Alterar tempo de inatividade | Sim       | Não         | RF-12            |
-| Consultar categorias         | Sim       | A definir   | RF-09            |
-| Criar palavra-chave          | Sim       | Não         | RF-08            |
-| Editar palavra-chave         | Sim       | Não         | RF-08            |
-| Excluir palavra-chave        | A definir | Não         | Não especificado |
-
-### Agente desktop
-
-| Ação                               | Gestor    | Colaborador |
-| ---------------------------------- | --------- | ----------- |
-| Utilizar agente na estação Windows | Não       | Sim         |
-| Visualizar status Online/Offline   | Não       | Sim         |
-
-A captura, sincronização e atualização de configurações são realizadas automaticamente pelo agente e não são consideradas ações manuais do Colaborador.
+As permissões devem ser validadas pelo backend.
 
 ---
 
-## 3. Acesso às interfaces
+## 2. Gestor
 
-| Interface                  | Gestor    | Colaborador |
-| -------------------------- | --------- | ----------- |
-| Painel de acompanhamento   | Sim       | Não  |
-| Configurações do sistema   | Sim       | Não         |
-| Relatório de produtividade | Sim       | A definir   |
-| Agente na System Tray      | A definir | Sim         |
+O Gestor utiliza principalmente o **Dashboard PWA**.
 
-A organização dessas interfaces está definida em [`sitemap.md`](sitemap.md).
+Pode:
 
----
+- criar conta por e-mail;
+- acessar o Dashboard;
+- gerar código de associação de 6 dígitos;
+- visualizar colaboradores associados;
+- criar e editar tasks;
+- associar colaboradores às tasks;
+- definir serviços monitorados;
+- configurar jornada;
+- configurar limite de inatividade;
+- acompanhar colaboradores Online;
+- consultar atividade e inatividade;
+- consultar possíveis horas extras;
+- gerar relatórios;
+- exportar relatórios em CSV ou PDF.
 
-## 4. Escopo dos dados
-
-As permissões indicam **o que** cada perfil pode fazer. Também é necessário definir **quais dados** cada perfil pode acessar.
-
-### Gestor
-
-Ainda precisa ser definido se o Gestor poderá acessar:
-
-* todos os colaboradores;
-* apenas colaboradores vinculados a ele;
-* colaboradores de uma equipe ou departamento;
-* registros históricos.
-
-### Colaborador
-
-Ainda precisa ser definido se o Colaborador poderá consultar suas próprias atividades ou se utilizará apenas o agente desktop.
-
-Também precisa ser definido como uma conta do sistema será relacionada ao `username` do Windows registrado pelo agente.
+O Gestor deve acessar somente dados dos colaboradores associados a ele.
 
 ---
 
-## 5. Regras de acesso
+## 3. Colaborador
 
-* Uma ação só deve ser permitida para os perfis autorizados.
-* Uma permissão não definida não deve ser considerada permitida.
-* O backend deve validar as permissões, mesmo que a interface esconda determinada ação.
-* O acesso deve considerar tanto o perfil quanto o escopo dos dados.
+O Colaborador utiliza principalmente o **Agente Desktop**.
+
+Pode:
+
+- criar conta quando não existir usuário registrado na estação;
+- acessar sua conta;
+- informar código de associação;
+- visualizar suas tasks;
+- visualizar as condições de monitoramento;
+- confirmar ciência;
+- iniciar uma task;
+- trocar ou encerrar a task;
+- visualizar seu estado Ativo/Inativo;
+- visualizar os serviços monitorados;
+- consultar seu histórico TXT pela System Tray.
+
+O Colaborador deve acessar somente seus próprios dados.
 
 ---
 
-## 6. Pendências
+## 4. Matriz de Permissões
 
-* [ ] Definir como Gestor e Colaborador realizam autenticação.
-* [ ] Definir como os perfis são atribuídos.
-* [ ] Definir acesso do Colaborador ao dashboard e relatórios.
-* [ ] Definir quais colaboradores cada Gestor pode visualizar.
-* [ ] Definir se o Colaborador pode consultar suas próprias atividades.
-* [ ] Definir vínculo entre conta e `username` do Windows.
-* [ ] Definir se palavras-chave podem ser excluídas.
-* [ ] Definir autenticação e autorização do agente.
-* [ ] Definir comportamento quando um acesso é negado.
+| Ação | Gestor | Colaborador |
+| --- | :---: | :---: |
+| Criar conta de Gestor | ✅ | ❌ |
+| Criar conta pelo Agente | ❌ | ✅ |
+| Gerar código de associação | ✅ | ❌ |
+| Informar código de associação | ❌ | ✅ |
+| Visualizar colaboradores associados | ✅ | ❌ |
+| Criar task | ✅ | ❌ |
+| Editar task | ✅ | ❌ |
+| Associar colaborador à task | ✅ | ❌ |
+| Definir serviços monitorados | ✅ | ❌ |
+| Visualizar próprias tasks | ❌ | ✅ |
+| Visualizar condições da task | ❌ | ✅ |
+| Confirmar ciência | ❌ | ✅ |
+| Iniciar task | ❌ | ✅ |
+| Trocar task | ❌ | ✅ |
+| Encerrar task | ❌ | ✅ |
+| Configurar jornada | ✅ | ❌ |
+| Configurar limite de inatividade | ✅ | ❌ |
+| Acompanhar colaboradores Online | ✅ | ❌ |
+| Consultar dados da equipe | ✅ | ❌ |
+| Consultar próprios dados | ❌ | ✅ |
+| Consultar histórico TXT | ❌ | ✅ |
+| Gerar relatórios | ✅ | ❌ |
+| Exportar CSV/PDF | ✅ | ❌ |
 
 ---
 
-## 7. Referências
+## 5. Escopo de acesso
 
-| Documento                  | Relação                       |
-| -------------------------- | ----------------------------- |
-| [`visao.md`](visao.md)     | Requisitos RF-08 a RF-16      |
-| [`sitemap.md`](sitemap.md) | Interfaces e áreas por perfil |
+```text
+GESTOR
+  ↓
+colaboradores associados
+  ↓
+tasks e registros da equipe
 
-**Última revisão:** 2026-09-06
+
+COLABORADOR
+  ↓
+suas próprias tasks
+  ↓
+seus próprios registros
+```
+
+O sistema não deve permitir acesso baseado apenas na interface.
+
+As permissões e relações entre usuários devem ser verificadas pelo backend.
+
+---
+
+## 6. Associação
+
+A relação inicial entre Gestor e Colaborador é criada através de um **código de 6 dígitos**.
+
+```text
+Gestor
+  ↓
+gera código
+  ↓
+Colaborador informa código
+  ↓
+associação
+```
+
+Após a associação:
+
+- o Gestor passa a visualizar o Colaborador;
+- o Colaborador pode ser associado às tasks do Gestor.
+
+---
+
+## 7. Regra geral
+
+> **O Gestor administra sua equipe e o Colaborador controla a execução das próprias tasks. Nenhum perfil deve acessar informações fora do seu escopo.**
