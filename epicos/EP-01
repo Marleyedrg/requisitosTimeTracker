@@ -1,0 +1,55 @@
+# EP-XX — Capturar atividade do colaborador
+
+## Objetivo
+
+Esse épico tem objetivo de descrever a principal atividade do sistema que é Capturar as atividade do colaborador 
+que esteja envolvido em uma task.
+
+## Requisitos relacionados
+
+- RF-06,07,08
+- RN-03,04,05
+- RNF-09,10
+
+## Critérios de Aceite relacionados
+- CA-03, 04, 05 
+
+## Escopo
+
+Este épico contempla:
+
+- funcionalidade A;
+- funcionalidade B;
+- funcionalidade C.
+
+## Fora do escopo
+
+- funcionalidade X;
+- funcionalidade Y.
+
+## User Stories
+
+### US-XX — Nome da história
+
+**Como** [tipo de usuário]  
+**Quero** [ação]  
+**Para** [benefício].
+
+#### Resultado esperado
+
+Descreva de forma simples o comportamento esperado.
+
+#### Tarefas
+
+- [ ] TASK-01 — ...
+- [ ] TASK-02 — ...
+- [ ] TASK-03 — ...
+
+## Definição de concluído
+
+O épico é considerado concluído quando:
+
+- [ ] critérios de aceite relacionados foram atendidos;
+- [ ] funcionalidades foram implementadas;
+- [ ] testes necessários foram executados;
+- [ ] documentação foi atualizada.

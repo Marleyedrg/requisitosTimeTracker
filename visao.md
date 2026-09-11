@@ -142,8 +142,6 @@ Também não fazem parte do monitoramento:
 
 ## 6. Execução da task
 
-O colaborador é considerado **Online** para o gestor somente enquanto possuir uma task ativa.
-
 ```text
 Login
   ↓
