@@ -48,8 +48,7 @@
 - **Dado que:** existe uma task ativa;
 - **Quando:** o colaborador utiliza a estação;
 - **Então:**
-  - somente aplicações pertencentes ao escopo da task são registradas;
-  - aplicações fora do escopo são ignoradas;
+  - aplicações pertencentes ao escopo da task e fora desse escopo são registradas;
   - os períodos de utilização são registrados;
   - o registro pode conter colaborador, usuário Windows, task, serviço, início, término e duração;
   - o estado Ativo/Inativo é determinado pela interação com mouse ou teclado;
@@ -147,9 +146,6 @@
 - **Dado que:** o agente está executando uma task;
 - **Quando:** informações são coletadas, armazenadas ou transmitidas;
 - **Então:**
-  - aplicações fora do escopo da task não são registradas;
-  - teclas digitadas não são capturadas;
-  - câmera, microfone e screenshots não fazem parte da coleta;
   - mouse e teclado são utilizados somente para identificar atividade/inatividade;
   - a comunicação com o servidor utiliza HTTPS;
   - as restrições de acesso aos dados são aplicadas pelo sistema.

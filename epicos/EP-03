@@ -1,0 +1,112 @@
+# EP-04 — Criar conta e realizar login
+
+## Objetivo
+
+Este épico tem como objetivo permitir a criação e o acesso às contas de **colaborador** e **gestor** no Time Tracker.
+
+O colaborador deve poder criar ou acessar sua conta através do Agente Desktop, enquanto o gestor deve poder criar e acessar sua conta através do Dashboard.
+
+### Requisitos Funcionais
+
+* RF-01, 02
+
+### Regras de Negócio
+
+* RN-01
+
+### Requisitos Não Funcionais
+
+* RNF-03, 04, 05, 12
+
+## Critérios de Aceite relacionados
+
+* CA-01 — Conta e associação
+
+## Escopo
+
+Este épico contempla:
+
+* verificar se existe um usuário registrado na estação;
+* permitir a criação da conta do colaborador pelo Agente Desktop;
+* permitir o acesso do colaborador à sua conta;
+* permitir a criação da conta do gestor pelo Dashboard;
+* permitir o acesso do gestor à sua conta;
+* validar as credenciais informadas;
+* proteger senhas, tokens e informações de sessão;
+* apresentar mensagens claras em caso de erro durante o acesso.
+
+## User Stories
+
+### US-01 — Criar conta do colaborador
+
+**Como** colaborador
+**Quero** criar minha conta através do Agente Desktop
+**Para** que eu possa acessar o Time Tracker e utilizar as funcionalidades disponíveis.
+
+#### Resultado esperado
+
+Ao iniciar o Agente Desktop, o sistema deve verificar se existe um usuário registrado na estação.
+
+Caso não exista, o colaborador deve possuir a opção de criar sua conta.
+
+#### Tarefas
+
+* [ ] TASK-01 — Verificar se existe usuário registrado na estação.
+* [ ] TASK-02 — Exibir opção de criação de conta quando necessário.
+* [ ] TASK-03 — Criar interface de cada
+# EP-04 — Criar conta e realizar login
+
+## Objetivo
+
+Este épico tem como objetivo permitir a criação e o acesso às contas de **colaborador** e **gestor** no Time Tracker.
+
+O colaborador deve poder criar ou acessar sua conta através do Agente Desktop, enquanto o gestor deve poder criar e acessar sua conta através do Dashboard.
+
+### Requisitos Funcionais
+
+* RF-01, 02
+
+### Regras de Negócio
+
+* RN-01
+
+### Requisitos Não Funcionais
+
+* RNF-03, 04, 05, 12
+
+## Critérios de Aceite relacionados
+
+* CA-01 — Conta e associação
+
+## Escopo
+
+Este épico contempla:
+
+* verificar se existe um usuário registrado na estação;
+* permitir a criação da conta do colaborador pelo Agente Desktop;
+* permitir o acesso do colaborador à sua conta;
+* permitir a criação da conta do gestor pelo Dashboard;
+* permitir o acesso do gestor à sua conta;
+* validar as credenciais informadas;
+* proteger senhas, tokens e informações de sessão;
+* apresentar mensagens claras em caso de erro durante o acesso.
+
+## User Stories
+
+### US-01 — Criar conta do colaborador
+
+**Como** colaborador
+**Quero** criar minha conta através do Agente Desktop
+**Para** que eu possa acessar o Time Tracker e utilizar as funcionalidades disponíveis.
+
+#### Resultado esperado
+
+Ao iniciar o Agente Desktop, o sistema deve verificar se existe um usuário registrado na estação.
+
+Caso não exista, o colaborador deve possuir a opção de criar sua conta.
+
+#### Tarefas
+
+* [ ] TASK-01 — Verificar se existe usuário registrado na estação.
+* [ ] TASK-02 — Exibir opção de criação de conta quando necessário.
+* [ ] TASK-03 — Criar interface de cada

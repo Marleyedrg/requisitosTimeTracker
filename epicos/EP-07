@@ -1,0 +1,126 @@
+# EP-08 — Configurar jornada e inatividade
+
+## Objetivo
+
+Este épico tem como objetivo permitir que o gestor configure a jornada de trabalho e o limite de inatividade dos colaboradores.
+
+Essas configurações devem ser utilizadas pelo sistema para determinar períodos de inatividade e identificar atividades realizadas após o horário previsto da jornada.
+
+### Requisitos Funcionais
+
+* RF-20, 21, 22
+
+### Regras de Negócio
+
+* RN-13, 14
+
+### Requisitos Não Funcionais
+
+* RNF-05, 12
+
+## Critérios de Aceite relacionados
+
+* CA-06 — Jornada e inatividade
+
+## Escopo
+
+Este épico contempla:
+
+* configurar os dias de trabalho;
+* configurar horário de entrada;
+* configurar horário de saída;
+* configurar intervalo;
+* definir a carga horária;
+* configurar o limite de inatividade;
+* aplicar o limite de inatividade durante o monitoramento;
+* identificar atividades realizadas após o término previsto da jornada;
+* indicar possíveis horas extras;
+* permitir que o gestor altere as configurações quando necessário.
+
+## User Stories
+
+### US-01 — Configurar jornada de trabalho
+
+**Como** gestor
+**Quero** configurar a jornada de trabalho do colaborador
+**Para** que o sistema conheça os horários previstos de trabalho.
+
+#### Resultado esperado
+
+O Dashboard deve permitir ao gestor configurar a jornada de trabalho do colaborador.
+
+A configuração deve permitir definir:
+
+* dias de trabalho;
+* horário de entrada;
+* horário de saída;
+* intervalo;
+* carga horária.
+
+#### Tarefas
+
+* [ ] TASK-01 — Criar interface de configuração da jornada.
+* [ ] TASK-02 — Permitir selecionar os dias de trabalho.
+* [ ] TASK-03 — Permitir definir o horário de entrada.
+* [ ] TASK-04 — Permitir definir o horário de saída.
+* [ ] TASK-05 — Permitir definir o intervalo.
+* [ ] TASK-06 — Permitir definir a carga horária.
+* [ ] TASK-07 — Validar as informações da jornada.
+* [ ] TASK-08 — Salvar as configurações.
+
+### US-02 — Configurar limite de inatividade
+
+**Como** gestor
+**Quero** definir o limite de inatividade do colaborador
+**Para** que o sistema consiga identificar quando ele deve ser considerado Inativo.
+
+#### Resultado esperado
+
+O gestor deve conseguir definir o período máximo sem interação com mouse ou teclado antes que o colaborador seja considerado **Inativo**.
+
+O agente deve utilizar o valor configurado durante o monitoramento.
+
+#### Tarefas
+
+* [ ] TASK-09 — Criar configuração do limite de inatividade.
+* [ ] TASK-10 — Permitir informar o período de inatividade.
+* [ ] TASK-11 — Validar o valor informado.
+* [ ] TASK-12 — Salvar o limite configurado.
+* [ ] TASK-13 — Disponibilizar a configuração para o Agente Desktop.
+* [ ] TASK-14 — Aplicar o limite durante o monitoramento.
+
+### US-03 — Identificar possível hora extra
+
+**Como** gestor
+**Quero** identificar atividades realizadas após o término previsto da jornada
+**Para** que eu possa visualizar possíveis períodos de hora extra.
+
+#### Resultado esperado
+
+Quando existir uma task ativa após o horário previsto de término da jornada, o sistema deve identificar esse período como uma **possível hora extra**.
+
+A identificação deve ser apresentada como indicação, sem determinar automaticamente que o período constitui hora extra definitiva.
+
+#### Tarefas
+
+* [ ] TASK-15 — Obter a jornada configurada do colaborador.
+* [ ] TASK-16 — Identificar o horário previsto de término da jornada.
+* [ ] TASK-17 — Verificar se existe uma task ativa após esse horário.
+* [ ] TASK-18 — Identificar o período excedente.
+* [ ] TASK-19 — Registrar o período como possível hora extra.
+* [ ] TASK-20 — Disponibilizar a informação para consulta no sistema.
+
+## Definição de concluído
+
+O épico é considerado concluído quando:
+
+* [ ] o gestor puder configurar os dias de trabalho;
+* [ ] o gestor puder configurar entrada, saída e intervalo;
+* [ ] a carga horária puder ser definida;
+* [ ] o gestor puder definir o limite de inatividade;
+* [ ] o agente utilizar o limite configurado;
+* [ ] atividades após o término previsto da jornada puderem ser identificadas;
+* [ ] possíveis horas extras forem registradas como indicação;
+* [ ] o CA-06 estiver atendido;
+* [ ] os testes necessários forem executados;
+* [ ] a documentação relacionada estiver atualizada.

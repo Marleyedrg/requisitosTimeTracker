@@ -10,7 +10,6 @@ Apresentar ao gestor uma visão geral da equipe, das tasks em andamento, das ati
 
 ---
 
-## 1. Cabeçalho e filtros
 
 No topo da tela devem estar disponíveis os filtros utilizados para atualizar as informações do Dashboard.
 
@@ -25,7 +24,7 @@ Exemplo:
 ```text
 Dashboard
 
-[ Período ▼ ] [ Colaborador ▼ ] [ Task ▼ ] [ Mostrar todas atividades]
+[ Período ▼ ] [ Colaborador ▼ ] [ Task ▼ ] 
 ```
 
 Ao alterar um filtro, os indicadores e visualizações da tela devem ser atualizados de acordo com a seleção.
@@ -85,28 +84,8 @@ O objetivo é permitir comparar a distribuição do tempo registrado entre as di
 
 ---
 
-## 5. Jornada planejada × realizada
 
-Apresentar a relação entre a jornada configurada e os períodos efetivamente registrados pelo colaborador.
-
-A visualização deve permitir identificar:
-
-- início previsto;
-- término previsto;
-- período registrado;
-- intervalo;
-- possíveis períodos adicionais;
-- possível hora extra.
-
-Exemplo:
-
-![Jornada prevista comparada à jornada registrada](./screen-imgs/journey.png)
-
-Possíveis horas extras devem ser apresentadas apenas como indicação.
-
----
-
-## 6. Activity Timeline
+## 5. Activity Timeline
 
 Permitir visualizar detalhadamente a sequência das atividades registradas durante uma task para cada colaborador selecionado.
 
@@ -141,7 +120,7 @@ Task: Implementar autenticação
 
 ---
 
-## 7. Exportar relatório
+## 6. Exportar relatório
 
 Permitir ao gestor gerar um relatório com base nas informações apresentadas no Dashboard.
 
@@ -175,7 +154,7 @@ No caso do CSV, as informações devem ser exportadas em formato tabular compat�
 
 ---
 
-## 8. Ações disponíveis
+## 7. Ações disponíveis
 
 A partir do Dashboard, o gestor poderá:
 
@@ -191,7 +170,7 @@ A partir do Dashboard, o gestor poderá:
 
 ---
 
-## 9. Regras gerais
+## 8. Regras gerais
 
 - mostrar somente colaboradores associados ao gestor;
 - considerar Online somente colaborador com task ativa;
@@ -205,9 +184,7 @@ A partir do Dashboard, o gestor poderá:
 
 ---
 
-![alt text](image.png)
-
-## 10. Requisitos relacionados
+## 9. Requisitos relacionados
 
 - RN-19
 - RF-27

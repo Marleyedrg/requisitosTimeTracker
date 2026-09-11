@@ -117,15 +117,13 @@ O Dashboard deve permitir ao gestor alterar os serviços da task e o agente deve
 
 ---
 
-# RN-08 — Serviços monitorados
+# RN-    — Serviços monitorados
 
-O agente deve monitorar somente os serviços ou aplicações definidos na task ativa.
-
-Aplicações fora desse escopo devem ser ignoradas.
+O agente deve monitorar os serviços ou aplicações definidos.
 
 ### RF-12 — Monitorar serviços da task
 
-O agente deve identificar a aplicação utilizada, comparar com os serviços definidos na task e registrar somente quando houver correspondência.
+O agente deve identificar a aplicação utilizada, comparar com os serviços definidos na task e registrar quando houver correspondência e quando não houver.
 
 ---
 
@@ -162,7 +160,7 @@ O agente deve alterar o estado entre Ativo e Inativo conforme o tempo sem intera
 
 # RN-11 — Estado e execução da task
 
-O colaborador será considerado **Online** somente enquanto possuir uma task ativa.
+O colaborador será considerado **Online** somente enquanto estiver login no sistema.
 
 O colaborador não pode possuir duas tasks ativas simultaneamente.
 

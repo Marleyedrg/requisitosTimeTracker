@@ -1,0 +1,114 @@
+# EP-05 — Associar gestor e colaborador
+
+## Objetivo
+
+Este épico tem como objetivo permitir a associação entre um gestor e um colaborador.
+
+O gestor deve conseguir gerar um **código de 6 dígitos**, que poderá ser informado pelo colaborador através do Agente Desktop para realizar a associação.
+
+Após a associação, o colaborador passa a fazer parte da equipe do gestor e poderá ser incluído em suas tasks.
+
+### Requisitos Funcionais
+
+* RF-03, 04, 05
+
+### Regras de Negócio
+
+* RN-02
+
+### Requisitos Não Funcionais
+
+* RNF-03, 05, 12
+
+## Critérios de Aceite relacionados
+
+* CA-01 — Conta e associação
+
+## Escopo
+
+Este épico contempla:
+
+* permitir ao gestor gerar um código de associação;
+* gerar um código composto por 6 dígitos;
+* permitir ao colaborador informar o código pelo Agente Desktop;
+* validar o código informado;
+* associar o colaborador ao gestor;
+* permitir ao gestor consultar seus colaboradores associados;
+* permitir que colaboradores associados sejam utilizados posteriormente nas tasks;
+* impedir acesso aos dados de colaboradores que não estejam associados ao gestor.
+
+## User Stories
+
+### US-01 — Gerar código de associação
+
+**Como** gestor
+**Quero** gerar um código de associação
+**Para** que um colaborador possa entrar para minha equipe.
+
+#### Resultado esperado
+
+O Dashboard deve permitir ao gestor gerar um código de **6 dígitos** para associação.
+
+O código deve estar relacionado ao gestor que realizou sua geração.
+
+#### Tarefas
+
+* [ ] TASK-01 — Criar opção para gerar código de associação.
+* [ ] TASK-02 — Gerar código composto por 6 dígitos.
+* [ ] TASK-03 — Associar o código ao gestor.
+* [ ] TASK-04 — Exibir o código gerado ao gestor.
+
+### US-02 — Associar colaborador ao gestor
+
+**Como** colaborador
+**Quero** informar o código fornecido pelo gestor
+**Para** que minha conta seja associada à equipe dele.
+
+#### Resultado esperado
+
+O Agente Desktop deve permitir que o colaborador informe o código de 6 dígitos recebido do gestor.
+
+Quando o código for válido, o sistema deve associar o colaborador ao respectivo gestor.
+
+#### Tarefas
+
+* [ ] TASK-05 — Criar campo para informar o código de associação.
+* [ ] TASK-06 — Receber o código informado pelo colaborador.
+* [ ] TASK-07 — Validar a existência do código.
+* [ ] TASK-08 — Identificar o gestor relacionado ao código.
+* [ ] TASK-09 — Associar o colaborador ao gestor.
+* [ ] TASK-10 — Informar ao colaborador o resultado da associação.
+
+### US-03 — Consultar colaboradores associados
+
+**Como** gestor
+**Quero** visualizar os colaboradores associados à minha conta
+**Para** que eu possa identificar os membros da minha equipe.
+
+#### Resultado esperado
+
+O Dashboard deve permitir ao gestor consultar os colaboradores que estão associados a ele.
+
+O gestor não deve visualizar colaboradores pertencentes a outros gestores.
+
+#### Tarefas
+
+* [ ] TASK-11 — Buscar os colaboradores associados ao gestor.
+* [ ] TASK-12 — Criar visualização dos colaboradores associados.
+* [ ] TASK-13 — Exibir as informações necessárias de cada colaborador.
+* [ ] TASK-14 — Garantir que somente colaboradores associados ao gestor sejam exibidos.
+
+## Definição de concluído
+
+O épico é considerado concluído quando:
+
+* [ ] o gestor puder gerar um código de associação de 6 dígitos;
+* [ ] o colaborador puder informar o código através do Agente Desktop;
+* [ ] códigos válidos permitirem a associação;
+* [ ] o colaborador estiver corretamente associado ao gestor;
+* [ ] o gestor puder consultar seus colaboradores associados;
+* [ ] colaboradores associados puderem posteriormente ser incluídos em tasks;
+* [ ] o gestor não possuir acesso aos colaboradores de outros gestores;
+* [ ] os critérios aplicáveis do CA-01 forem atendidos;
+* [ ] os testes necessários forem executados;
+* [ ] a documentação relacionada estiver atualizada.

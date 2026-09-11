@@ -125,7 +125,7 @@ A forma visual será definida durante a implementação.
 
 ---
 
-## 6. Critérios gerais
+## 6. Critérios 
 
 A interface responsiva deve garantir:
 
@@ -159,4 +159,4 @@ Ainda precisam ser definidos durante implementação e testes:
 - largura mínima suportada;
 - navegadores suportados;
 - comportamento final das tabelas em telas pequenas;
-- protótipos ou referências visuais para cada tamanho de tela.
+- protótipos ou referências visuais para cada tamanho de tela.  
