@@ -205,8 +205,13 @@ A partir do Dashboard, o gestor poderá:
 
 ---
 
+![alt text](image.png)
+
 ## 10. Requisitos relacionados
 
 - RN-19
 - RF-27
 - CA-10
+
+
+
