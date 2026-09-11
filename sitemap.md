@@ -283,7 +283,7 @@ Serviço monitorado
         ↓
 Registro
         ↓
-SQLite
+JSON
         ↓
 Backend
 ```

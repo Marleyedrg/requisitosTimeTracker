@@ -179,7 +179,7 @@ Os registros são armazenados localmente antes da transmissão.
 ```text
 Registro
    ↓
-SQLite
+JSON
    ↓
 Backend
    ↓
