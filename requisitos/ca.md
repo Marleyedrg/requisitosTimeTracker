@@ -67,7 +67,7 @@
 - **Quando:** consulta, encerra ou troca a task;
 - **Então:**
   - o estado atual do monitoramento é exibido;
-  - o gestor visualiza o colaborador como Online enquanto houver uma task ativa;
+  - o gestor visualiza o colaborador como Online quando tiver feito o login;
   - o colaborador não pode possuir duas tasks ativas simultaneamente;
   - ao encerrar a task, o monitoramento também é encerrado;
   - ao trocar de task, a anterior é finalizada antes do início da nova.
