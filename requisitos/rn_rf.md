@@ -297,3 +297,47 @@ Esta regra deve ser respeitada principalmente por:
 - **RF-12 — Monitorar serviços da task**;
 - **RF-13 — Registrar períodos de utilização**;
 - **RF-14 — Controlar atividade e inatividade**.
+
+---
+
+# RN-19 — Visão gerencial do Dashboard
+
+O gestor deve possuir uma visão consolidada das informações dos colaboradores associados a ele.
+
+As informações apresentadas no Dashboard devem permitir acompanhar:
+
+- estado Online/Offline dos colaboradores;
+- tasks em andamento;
+- tempo ativo e inativo;
+- tempo registrado por task;
+- jornada planejada e realizada;
+- possíveis horas extras;
+- sequência das atividades registradas.
+
+As informações devem respeitar os filtros selecionados e as regras de acesso aos dados.
+
+### RF-27 — Exibir Dashboard analítico
+
+O Dashboard deve permitir ao gestor visualizar informações consolidadas dos colaboradores associados, incluindo:
+
+- quantidade de colaboradores Online e Offline;
+- quantidade de tasks ativas;
+- tempo total ativo;
+- tempo total inativo;
+- tempo registrado por task;
+- jornada planejada e realizada;
+- possíveis horas extras;
+- status dos colaboradores;
+- Activity Timeline das tasks.
+
+O Dashboard deve permitir filtrar as informações por:
+
+- período;
+- colaborador;
+- task.
+
+Ao alterar um filtro, os indicadores e visualizações relacionados devem ser atualizados de acordo com a seleção.
+
+O Dashboard deve apresentar somente informações que o gestor possui permissão para consultar.
+
+---

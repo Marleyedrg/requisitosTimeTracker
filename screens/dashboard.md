@@ -108,24 +108,24 @@ Possíveis horas extras devem ser apresentadas apenas como indicação.
 
 ## 6. Activity Timeline
 
-Permitir visualizar detalhadamente a sequência das atividades registradas durante uma task para cada colaborador.
-
-Exemplo:
+Permitir visualizar detalhadamente a sequência das atividades registradas durante uma task para cada colaborador selecionado.
 
 ![Timeline de atividade da task](./screen-imgs/activity-timeline.png)
 
+Exemplo:
+
 A timeline deve permitir identificar:
 
-- aplicação monitorada;
-- início do período;
-- término do período;
-- duração;
-- estado Ativo/Inativo;
-- task relacionada.
+aplicação monitorada;
+início do período;
+término do período;
+duração;
+estado Ativo/Inativo;
+task relacionada.
 
 O gestor deve poder selecionar o colaborador cuja Activity Timeline deseja visualizar.
 
-Ao selecionar ou posicionar o cursor sobre um período, poderão ser exibidos seus detalhes.
+Caso o resultado inclua mais de um colaborador, a visualização deverá ser apresentada como uma lista de timelines, com uma timeline para cada colaborador.
 
 Exemplo:
 
@@ -209,4 +209,4 @@ A partir do Dashboard, o gestor poderá:
 
 - RN-19
 - RF-27
-- CA-XX
+- CA-10
