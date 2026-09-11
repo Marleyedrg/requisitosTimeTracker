@@ -25,7 +25,7 @@ Exemplo:
 ```text
 Dashboard
 
-[ Período ▼ ] [ Colaborador ▼ ] [ Task ▼ ]
+[ Período ▼ ] [ Colaborador ▼ ] [ Task ▼ ] [ Mostrar todas atividades]
 ```
 
 Ao alterar um filtro, os indicadores e visualizações da tela devem ser atualizados de acordo com a seleção.
