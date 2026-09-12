@@ -76,8 +76,6 @@ O gestor define para cada task:
 
 O colaborador visualiza somente as tasks às quais estiver associado.
 
-Aplicações fora do escopo da task devem ser ignoradas.
-
 ---
 
 ## 4. Transparência

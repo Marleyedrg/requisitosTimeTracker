@@ -173,9 +173,8 @@ A partir do Dashboard, o gestor poderá:
 ## 8. Regras gerais
 
 - mostrar somente colaboradores associados ao gestor;
-- considerar Online somente colaborador com task ativa;
+- considerar Online colaborador com login no sistema;
 - mostrar somente informações pertencentes às tasks e colaboradores que o gestor pode acessar;
-- aplicações fora do escopo da task não devem aparecer nas visualizações;
 - períodos de inatividade devem ser apresentados separadamente dos períodos de atividade;
 - os filtros devem atualizar os indicadores e visualizações relacionados;
 - não apresentar métricas ou rankings de produtividade;
