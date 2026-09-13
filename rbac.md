@@ -51,8 +51,8 @@ O Colaborador utiliza principalmente o **Agente Desktop**.
 
 Pode:
 
-- criar conta quando não existir usuário registrado na estação;
-- acessar sua conta;
+- ser identificado e registrado automaticamente pelo Agente Desktop;
+- utilizar o sistema sem criar conta ou realizar login manualmente;
 - informar código de associação;
 - visualizar suas tasks;
 - visualizar as condições de monitoramento;
@@ -72,7 +72,8 @@ O Colaborador deve acessar somente seus próprios dados.
 | Ação | Gestor | Colaborador |
 | --- | :---: | :---: |
 | Criar conta de Gestor | ✅ | ❌ |
-| Criar conta pelo Agente | ❌ | ✅ |
+| Ser identificado e registrado pelo Agente | ❌ | ✅ |
+| Realizar login manual | ✅ | ❌ |
 | Gerar código de associação | ✅ | ❌ |
 | Informar código de associação | ❌ | ✅ |
 | Visualizar colaboradores associados | ✅ | ❌ |
